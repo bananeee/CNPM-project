@@ -1,6 +1,8 @@
 var config = {
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: #d3d9eb,
+
     scene: [SceneChild1]
 }
+
+var game = new Phaser.Game(config);
