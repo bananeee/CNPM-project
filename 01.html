@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>DAI's GAME</title>
+    <script src="phaser.js"></script>
+    <script src="phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script type="text/javascript">
+        window.onload = function() {
+            let config = {
+                type: Phaser.AUTO,
+                width: window.innerWidth,
+                height: window.innerHeight,
+                pixelArt: true,
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        gravity: {
+                            y: 0
+                        }
+                    }
+                },
+                scene: playGame
+            }
+            game = new Phaser.Game(config);
+            window.focus();
+        }
+
+        class playGame extends Phaser.Scene {
+            constructor() {
+                super('PlayGame');
+            }
+            preload() {
+                this.load.image("BG", "assets/BG.jpg");
+                this.load.image("pk1", "assets/Packet1.png");
+                this.load.image("pk2", "assets/Packet2.png");
+                this.load.image("pk3", "assets/Packet3.png");
+                this.load.image("pk4", "assets/Packet1.png");
+            }
+            create() {
+                this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'BG');
+                this.pk1 = this.add.image(400, 300, "pk1");
+            }
+
+            move(pk, speed) {
+                pk.x = pk.x + speed;
+                if (pk.x > window.innerWidth) {
+                    pk.x = 0;
+                }
+            }
+
+            update() {
+
+                this.move(this.pk1, 3);
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
