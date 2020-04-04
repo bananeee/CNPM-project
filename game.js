@@ -1,6 +1,5 @@
 var config = {
-    width: window.innerWidth,
-    height: window.innerHeight,
+	Ten toi laf minh
 
     scene: [SceneChild1]
 }
