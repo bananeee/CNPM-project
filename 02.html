@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>DAI's GAME</title>
+    <script src="phaser.js"></script>
+    <script src="phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script type="text/javascript">
+        var config = {
+            type: Phaser.AUTO,
+            width: window.innerWidth,
+            height: window.innerHeight,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload() {
+            this.load.image("BG", "assets/BG.jpg");
+            this.load.image("pk1", "assets/Packet1.png");
+            this.load.image("pk2", "assets/Packet2.png");
+            this.load.image("pk3", "assets/Packet3.png");
+            this.load.image("pk4", "assets/Packet1.png");
+            this.load.image("pk5", "assets/Packet1.png");
+            this.load.image("pk6", "assets/Packet1.png");
+            this.load.image("pk7", "assets/Packet1.png");
+        }
+
+        function create() {
+            this.add.image(config.width / 2, config.height / 2, "BG");
+
+            this.pk1 = this.add.image(400, 300, "pk1");
+
+            this.pk2 = this.add.image(800, 600, "pk2").setInteractive();
+
+            this.input.setDraggable(this.pk2);
+
+            this.input.dragDistanceThreshold = 16;
+
+            this.input.on('dragstart', function(pointer, gameObject) {
+
+                gameObject.setTint(0xff0000);
+
+            });
+
+            this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
+
+                gameObject.x = dragX;
+                gameObject.y = dragY;
+
+            });
+
+            this.input.on('dragend', function(pointer, gameObject) {
+
+                gameObject.clearTint();
+
+            });
+
+
+
+        }
+
+        function update() {
+            move(this.pk1, 3);
+        }
+
+        function move(pk, speed) {
+            pk.x += speed;
+            if (pk.x >= config.width) {
+                pk.x = 0;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
