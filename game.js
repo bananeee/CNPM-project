@@ -1,8 +1,10 @@
 var config = {
+    type: Phaser.AUTO,
     width: window.innerWidth,
     height: window.innerHeight,
-
-    scene: [SceneChild1]
-}
-
-var game = new Phaser.Game(config);
+    backgroundColor: 0xe6e6e6,
+    scene: [SceneChild1],
+  }
+  
+  var game = new Phaser.Game(config);
+  
