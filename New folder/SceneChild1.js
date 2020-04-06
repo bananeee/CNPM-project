@@ -20,21 +20,26 @@ class SceneChild1 extends Phaser.Scene {
                 this.add.image(config.width / 2, config.height / 2, 'pk' + i).setInteractive({ draggable: true }));
         }
 
-        this.stop = false;
+        this.stop = 1;
         this.input.dragDistanceThreshold = 16;
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
             gameObject.y = dragY;
+            var self = this;
+            self.stop = 1000;
+            // this.stop = 1000;
         });
 
-        this.input.on('dragstart', function (pointer) {
-            this.stop = true;
-        }, this);
+        // this.input.on('dragstart', function (pointer) {
 
-        this.input.on('dragend', function(pointer, gameObject) {
-            this.stop = false;
-        }, this); 
+        //     stop = 1000;
 
+        // });
+        // this.input.on('dragend', function(pointer, gameObject) {
+
+        //     this.stop = false;
+
+        // });
         this.text1 = this.add.text(32, 32);
         this.text2 = this.add.text(32, 52);
         this.text3 = this.add.text(32, 72);
@@ -42,7 +47,7 @@ class SceneChild1 extends Phaser.Scene {
     }
  
     update() {
-        if (this.packageOnTrack.length != 0 && this.stop == false) {
+        if (this.packageOnTrack.length != 0 && this.stop == 1) {
             this.move(2);
         }
         this.text1.setText("Track " + this.packageOnTrack.length);
