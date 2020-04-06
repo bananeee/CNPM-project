@@ -22,13 +22,13 @@ class SceneChild1 extends Phaser.Scene {
 
         this.stop = 1;
         this.input.dragDistanceThreshold = 16;
-        this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+        this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
             gameObject.y = dragY;
             this.stop = 1000;
         });
 
-        this.input.on('dragstart', function (pointer, dragX, dragY) {
+        this.input.on('dragstart', function(pointer, dragX, dragY) {
 
             stop = 1000;
 
@@ -54,16 +54,17 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     move(speed) {
-        for (let i = 0; i < this.packageOnTrack.length; i++) {
+        let i = 0;
+        while (i < this.packageOnTrack.length) {
             if (this.packageOnTrack[i].x > config.width) {
                 this.packageOnTrack[i].x = config.width / 2;
-                this.packageStaged.push(this.packageOnTrack.splice(i, 1));
+                this.packageStaged.push(this.packageOnTrack[i]);
+                this.packageOnTrack.splice(i, 1)
                 i--;
-
-            }
-            else {
+            } else {
                 this.packageOnTrack[i].x += speed;
             }
+            i++;
         }
     }
 
