@@ -1,8 +1,10 @@
+console.clear();
 var config = {
     type: Phaser.AUTO,
-    width: window.innerWidth,
-    height: window.innerHeight,
-    // backgroundColor: 0xe6e6e6,
+    width: 1024,
+    height: 610,
+    parent: 'game_box',
+    // backgroundColor: 0xffffff,
     scene: [SceneChild1],
   }
   
