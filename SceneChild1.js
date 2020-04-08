@@ -70,7 +70,7 @@ class SceneChild1 extends Phaser.Scene {
     packageSetup() {
         for (let i = 0; i < 3; i++) {
             this.packageStacked.push(
-                this.add.image(-100, 200, 'pk' + i).setInteractive({ draggable: true }));
+                this.add.image(-100, 200, 'pk' + i).setInteractive({ draggable: true })); //Start position
         }
     }
 
@@ -132,8 +132,8 @@ class SceneChild1 extends Phaser.Scene {
     move(speed) {
         let i = 0;
         while (i < this.packageOnTrack.length) {
-            if (this.packageOnTrack[i].x > config.width + 208/2) {
-                this.packageOnTrack[i].x = -100;
+            if (this.packageOnTrack[i].x > config.width + 208/2) {      //end position  
+                this.packageOnTrack[i].x = -100;                        //restart position
                 this.packageStacked.push(this.packageOnTrack[i]);
                 this.packageOnTrack.splice(i, 1)
                 i--;
