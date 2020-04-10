@@ -167,4 +167,5 @@ class SceneChild1 extends Phaser.Scene {
             this.packageOnTrack.push(this.packageStacked.shift());
     }
 
+
 }
