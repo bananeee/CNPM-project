@@ -27,6 +27,7 @@ class SceneChild1 extends Phaser.Scene {
 
         this.inputManager();
 
+
         // Repeatedly put package to the screen after a duration
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
 
@@ -40,11 +41,11 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     update() {
-        if (this.packageOnTrack.length != 0 && this.stop == false) {
+        if (this.packageOnTrack.length != 0 && !this.stop) {
             this.move(3);
         }
 
-        this.text1.setText("Track " + this.packageOnTrack.length);
+        // this.text1.setText("Track " + this.packageOnTrack.length);
         this.text2.setText("Staged " + this.packageStacked.length);
         this.text3.setText("Stop " + this.stop);
         this.text4.setText("Delay " + this.delay);
@@ -56,7 +57,7 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     gameSetup() {
-        this.packageSize = { width: 200, height: 170 };
+        this.packageSize = { width: 188, height: 170 };
 
         this.stop = false; // stop all animation when dragging
 
@@ -96,10 +97,7 @@ class SceneChild1 extends Phaser.Scene {
     packageSetup() {
         var packages = [];
         for (let i = 0; i < 7; i++) {
-            if (i < 5)
-                packages.push(this.add.image(-this.packageSize.width, config.height * 0.33, 'pk' + i).setName(i).setInteractive({ draggable: true }), );
-            else
-                packages.push(this.add.image(-this.packageSize.width, config.height * 0.33, 'pk' + i).setName(i).setInteractive({ draggable: true }), );
+            packages.push(this.add.image(-this.packageSize.width / 2, config.height * 0.33, 'pk' + i).setName(i).setInteractive({ draggable: true }));
         }
 
         while (packages.length > 0) {
@@ -113,21 +111,22 @@ class SceneChild1 extends Phaser.Scene {
     inputManager() {
         this.input.dragDistanceThreshold = 0;
 
-        this.input.on('dragstart', function(pointer, gameObject) {
+        this.input.on('dragstart', function (pointer, gameObject) {
             this.children.bringToTop(gameObject);
-            // gameObject.setTint(0xff0000);
+            gameObject.setTint(0xff0000);
             this.stop = true;
             this.timedEvent.paused = true; // these two stop and timeEvent must go together
         }, this);
 
-        this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
+        this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 
             gameObject.x = dragX;
             gameObject.y = dragY;
 
         }, this);
 
-        this.input.on('drop', function(pointer, gameObject, dropZone) {
+        this.correctDrop = false;                           // checking if drop correctly
+        this.input.on('drop', function (pointer, gameObject, dropZone) {
             if ((dropZone.name === "weekDays" && gameObject.name < 5) ||
                 dropZone.name === "weeKends" && gameObject.name >= 5) {
                 gameObject.x = dropZone.x;
@@ -135,22 +134,25 @@ class SceneChild1 extends Phaser.Scene {
                 this.correctDrop = true;
             } else {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
-                this.correctDrop = false;
+                this.correctDrop = false;          
             }
-
         }, this);
 
-        this.input.on('dragend', function(pointer, gameObject, dropped) {
+        this.input.on('dragend', function (pointer, gameObject, dropped) {
             gameObject.input.enabled = false;
             gameObject.clearTint();
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
             }
-            var timedEvent = this.time.delayedCall(this.duration, function() {
+
+            var timedEvent = this.time.delayedCall(this.duration, function () {
                 this.stop = false;
                 this.timedEvent.paused = false;
-                if (this.correctDrop = false)
+
+                if ((dropped && !this.correctDrop) || !dropped) {
                     gameObject.input.enabled = true;
+                }
+
             }, [], this);
 
         }, this);
@@ -161,8 +163,9 @@ class SceneChild1 extends Phaser.Scene {
     move(speed) {
         let i = 0;
         while (i < this.packageOnTrack.length) {
-            if (this.packageOnTrack[i].x > config.width + this.packageSize.width / 2) { // end position
-                this.packageOnTrack[i].x = -config.width / 2; // start position
+            if (this.packageOnTrack[i].x >= config.width + this.packageSize.width / 2) { // end position
+                // this.packageOnTrack[i].x = -config.width / 2; 
+                this.packageOnTrack[i].x = -this.packageSize.width / 2; // start position
                 this.packageStacked.push(this.packageOnTrack[i]);
                 this.packageOnTrack.splice(i, 1)
                 i--;
@@ -185,8 +188,10 @@ class SceneChild1 extends Phaser.Scene {
 
     onEvent() {
         this.delay++;
-        if (this.packageStacked.length >= 0)
+        if (this.packageStacked.length > 0) {
             this.packageOnTrack.push(this.packageStacked.shift());
+        }
+
     }
 
 
