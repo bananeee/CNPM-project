@@ -57,7 +57,7 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     gameSetup() {
-        this.packageSize = { width: 188, height: 170 };
+        this.packageSize = { width: 210, height: 165 };
 
         this.stop = false; // stop all animation when dragging
 
@@ -69,10 +69,10 @@ class SceneChild1 extends Phaser.Scene {
         this.slotWeekday = 0;
         this.slotWeekend = 5;
 
-        this.packageSlot = [{x: 0.113 * config.width, y: 0.772 * config.height}, {x: 0.235 * config.width, y: 0.772 * config.height}, 
-                            {x: 0.357 * config.width, y: 0.772 * config.height}, {x: 0.113 * config.width, y: 0.611 * config.height}, 
-                            {x: 0.235 * config.width, y: 0.611 * config.height}, {x: 0.67 * config.width, y: 0.772 * config.height}, 
-                            {x: 0.766 * config.width, y: 0.772 * config.height}];
+        this.packageSlot = [{x: 0.085 * config.width, y: 0.8 * config.height}, {x: 0.22 * config.width, y: 0.8 * config.height}, 
+                            {x: 0.36 * config.width, y: 0.8 * config.height}, {x: 0.113 * config.width, y: 0.611 * config.height}, 
+                            {x: 0.25 * config.width, y: 0.611 * config.height}, {x: 0.67 * config.width, y: 0.8 * config.height}, 
+                            {x: 0.825 * config.width, y: 0.8 * config.height}];
 
     }
 
