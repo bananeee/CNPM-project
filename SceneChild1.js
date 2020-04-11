@@ -27,6 +27,7 @@ class SceneChild1 extends Phaser.Scene {
 
         this.inputManager();
 
+
         // Repeatedly put package to the screen after a duration
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
 
@@ -40,7 +41,7 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     update() {
-        if (this.packageOnTrack.length != 0 && this.stop == false) {
+        if (this.packageOnTrack.length != 0 && !this.stop) {
             this.move(3);
         }
 
@@ -96,10 +97,7 @@ class SceneChild1 extends Phaser.Scene {
     packageSetup() {
         var packages = [];
         for (let i = 0; i < 7; i++) {
-            if (i < 5)
-                packages.push(this.add.image(-this.packageSize.width, config.height * 0.33, 'pk' + i).setName(i).setInteractive({ draggable: true }), );
-            else
-                packages.push(this.add.image(-this.packageSize.width, config.height * 0.33, 'pk' + i).setName(i).setInteractive({ draggable: true }), );
+            packages.push(this.add.image(-this.packageSize.width / 2, config.height * 0.33, 'pk' + i).setName(i).setInteractive({ draggable: true }), );
         }
 
         while (packages.length > 0) {
@@ -115,7 +113,7 @@ class SceneChild1 extends Phaser.Scene {
 
         this.input.on('dragstart', function(pointer, gameObject) {
             this.children.bringToTop(gameObject);
-            // gameObject.setTint(0xff0000);
+            gameObject.setTint(0xff0000);
             this.stop = true;
             this.timedEvent.paused = true; // these two stop and timeEvent must go together
         }, this);
@@ -137,15 +135,17 @@ class SceneChild1 extends Phaser.Scene {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
                 gameObject.input.enabled = true;
             }
-
         }, this);
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
-            // gameObject.input.enabled = false;
+
             gameObject.clearTint();
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
+                gameObject.input.enabled = false;
             }
+
+
             var timedEvent = this.time.delayedCall(this.duration, function() {
                 this.stop = false;
                 this.timedEvent.paused = false;
@@ -161,8 +161,9 @@ class SceneChild1 extends Phaser.Scene {
     move(speed) {
         let i = 0;
         while (i < this.packageOnTrack.length) {
-            if (this.packageOnTrack[i].x > config.width + this.packageSize.width / 2) { // end position
-                this.packageOnTrack[i].x = -config.width / 2; // start position
+            if (this.packageOnTrack[i].x >= config.width + this.packageSize.width / 2) { // end position
+                // this.packageOnTrack[i].x = -config.width / 2; 
+                this.packageOnTrack[i].x = -this.packageSize.width / 2; // start position
                 this.packageStacked.push(this.packageOnTrack[i]);
                 this.packageOnTrack.splice(i, 1)
                 i--;
@@ -185,8 +186,10 @@ class SceneChild1 extends Phaser.Scene {
 
     onEvent() {
         this.delay++;
-        if (this.packageStacked.length >= 0)
+        if (this.packageStacked.length > 0) {
             this.packageOnTrack.push(this.packageStacked.shift());
+        }
+
     }
 
 
