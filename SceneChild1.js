@@ -65,6 +65,15 @@ class SceneChild1 extends Phaser.Scene {
         this.packageOnTrack = []; // package is being displayed
 
         this.duration = 1000; // duration for animation
+
+        this.slotWeekday = 0;
+        this.slotWeekend = 5;
+
+        this.packageSlot = [{x: 0.113 * config.width, y: 0.772 * config.height}, {x: 0.235 * config.width, y: 0.772 * config.height}, 
+                            {x: 0.357 * config.width, y: 0.772 * config.height}, {x: 0.113 * config.width, y: 0.611 * config.height}, 
+                            {x: 0.235 * config.width, y: 0.611 * config.height}, {x: 0.67 * config.width, y: 0.772 * config.height}, 
+                            {x: 0.766 * config.width, y: 0.772 * config.height}];
+
     }
 
     // Drop zone 
@@ -129,11 +138,21 @@ class SceneChild1 extends Phaser.Scene {
         this.input.on('drop', function (pointer, gameObject, dropZone) {
             if ((dropZone.name === "weekDays" && gameObject.name < 5) ||
                 dropZone.name === "weeKends" && gameObject.name >= 5) {
-                gameObject.x = dropZone.x;
-                gameObject.y = dropZone.y;
+
+                this.packageOnTrack.splice( this.findPackageByName( gameObject.name ), 1 );
+                
                 this.correctDrop = true;
+                var packagePos;
+                if (dropZone.name === "weekDays" && gameObject.name < 5) {
+                    packagePos = this.packageSlot[this.slotWeekday];
+                    this.slotWeekday ++;
+                } else {
+                    packagePos = this.packageSlot[this.slotWeekend];
+                    this.slotWeekend ++;
+                }
+                gameObject.setScale(1 / 1.5);
+                this.tweenItem(gameObject, packagePos.x, packagePos.y);
             } else {
-                this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
                 this.correctDrop = false;          
             }
         }, this);
@@ -141,18 +160,16 @@ class SceneChild1 extends Phaser.Scene {
         this.input.on('dragend', function (pointer, gameObject, dropped) {
             gameObject.input.enabled = false;
             gameObject.clearTint();
-            if (!dropped) {
+            if ((dropped && !this.correctDrop) || !dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
             }
 
             var timedEvent = this.time.delayedCall(this.duration, function () {
                 this.stop = false;
                 this.timedEvent.paused = false;
-
                 if ((dropped && !this.correctDrop) || !dropped) {
                     gameObject.input.enabled = true;
                 }
-
             }, [], this);
 
         }, this);
@@ -176,6 +193,7 @@ class SceneChild1 extends Phaser.Scene {
         }
     }
 
+    // moving item to position
     tweenItem(gameObject, desX, desY) {
         var tween = this.tweens.add({
             targets: gameObject,
@@ -184,6 +202,17 @@ class SceneChild1 extends Phaser.Scene {
             duration: this.duration,
             ease: 'Linear'
         });
+    }
+
+    findPackageByName(name) {
+        let i = 0;
+        while (i < this.packageOnTrack.length) {
+            if (this.packageOnTrack[i].name == name) {
+                return i;
+            } else {
+                i++;
+            }
+        }
     }
 
     onEvent() {
