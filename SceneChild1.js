@@ -132,16 +132,16 @@ class SceneChild1 extends Phaser.Scene {
                 dropZone.name === "weeKends" && gameObject.name >= 5) {
                 gameObject.x = dropZone.x;
                 gameObject.y = dropZone.y;
-                gameObject.input.enabled = false;
+                this.correctDrop = true;
             } else {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
-                gameObject.input.enabled = true;
+                this.correctDrop = false;
             }
 
         }, this);
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
-            // gameObject.input.enabled = false;
+            gameObject.input.enabled = false;
             gameObject.clearTint();
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
@@ -149,7 +149,7 @@ class SceneChild1 extends Phaser.Scene {
             var timedEvent = this.time.delayedCall(this.duration, function() {
                 this.stop = false;
                 this.timedEvent.paused = false;
-                if (!dropped)
+                if (this.correctDrop = false)
                     gameObject.input.enabled = true;
             }, [], this);
 
