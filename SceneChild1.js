@@ -16,6 +16,9 @@ class SceneChild1 extends Phaser.Scene {
 
         this.load.image('trolleyLeft', 'assets/trolley_left.png');
         this.load.image('trolleyRight', 'assets/trolley_right.png');
+
+        this.load.image('trolleyWeekdays', 'assets/Weekdays.png');
+        this.load.image('trolleyWeekends', 'assets/Weekdays.png');
     }
 
     create() {
@@ -30,6 +33,7 @@ class SceneChild1 extends Phaser.Scene {
 
         // Repeatedly put package to the screen after a duration
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
+
 
         // DEBUG TEXT
         this.text1 = this.add.text(32, 32, { fill: '0x32a852' });
@@ -74,9 +78,14 @@ class SceneChild1 extends Phaser.Scene {
 
         this.zoneWeekDay = this.add.image(0.23 * config.width, 0.78 * config.height, "trolleyLeft").setName("weekDays").setInteractive();
         this.zoneWeekend = this.add.image(0.77 * config.width, 0.78 * config.height, "trolleyRight").setName("weeKends").setInteractive();
+        this.trolleyWeekday = this.add.image(0.23 * config.width, 0.78 * config.height + 105, "trolleyWeekdays");
+        this.trolleyWeekend = this.add.image(0.77 * config.width, 0.78 * config.height + 105, "trolleyWeekends");
 
         this.zoneWeekend.input.dropZone = true;
         this.zoneWeekDay.input.dropZone = true;
+
+        this.trolleyWeekend.setDisplaySize(404 - 35, 50);
+        this.trolleyWeekday.setDisplaySize(404 - 35, 50);
 
         this.zoneWeekDay.setDisplaySize(0.46 * config.width, 0.46 * config.height);
         this.zoneWeekend.setDisplaySize(0.46 * config.width, 0.46 * config.height);
@@ -125,7 +134,18 @@ class SceneChild1 extends Phaser.Scene {
 
         }, this);
 
+
+
+        this.input.on('dragenter', function(pointer, gameObject, dropZone) {
+            // dropZone.setTint(0xcdd1ce, 0xcdd1ce, 0xcdd1ce, 0xe8200e);
+            dropZone.setTint(0xcdd1ce);
+        });
+        this.input.on('dragleave', function(pointer, gameObject, dropZone) {
+            dropZone.clearTint();
+        });
+
         this.input.on('drop', function(pointer, gameObject, dropZone) {
+
             if ((dropZone.name === "weekDays" && gameObject.name < 5) ||
                 dropZone.name === "weeKends" && gameObject.name >= 5) {
                 gameObject.x = dropZone.x;
@@ -133,24 +153,36 @@ class SceneChild1 extends Phaser.Scene {
                 gameObject.input.enabled = false;
             } else {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
-                gameObject.input.enabled = true;
+
+                gameObject.input.enabled = false;
+
+                if (dropZone.name === "weekDays") {
+                    this.trolleyWeekday.setTint(0xe8200e);
+                } else
+                    this.trolleyWeekend.setTint(0xe8200e);
+
+                var timedEvent = this.time.delayedCall(this.duration, function() {
+                    this.stop = false;
+                    this.trolleyWeekday.clearTint();
+                    this.trolleyWeekend.clearTint();
+                    this.timedEvent.paused = false;
+                    gameObject.input.enabled = true;
+                }, [], this);
             }
         }, this);
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
-
+            gameObject.input.enabled = false;
             gameObject.clearTint();
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY);
-                gameObject.input.enabled = false;
             }
-
-
             var timedEvent = this.time.delayedCall(this.duration, function() {
                 this.stop = false;
                 this.timedEvent.paused = false;
-                if (!dropped)
+                if (!dropped) {
                     gameObject.input.enabled = true;
+                }
             }, [], this);
 
         }, this);
