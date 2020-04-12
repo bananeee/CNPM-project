@@ -16,6 +16,8 @@ class SceneChild1 extends Phaser.Scene {
 
         this.load.image('trolleyLeft', 'assets/trolley_left.png');
         this.load.image('trolleyRight', 'assets/trolley_right.png');
+
+        this.load.image('loader', 'assets/loader.png');
     }
 
     create() {
@@ -43,6 +45,7 @@ class SceneChild1 extends Phaser.Scene {
     update() {
         if (this.packageOnTrack.length != 0 && !this.stop) {
             this.move(3);
+            this.loader.tilePositionX -= 3;
         }
 
         // this.text1.setText("Track " + this.packageOnTrack.length);
@@ -57,6 +60,8 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     gameSetup() {
+        this.loader = this.add.tileSprite(config.width / 2, config.height * 0.471, config.width, 15, 'loader' );
+
         this.packageSize = { width: 210, height: 165 };
 
         this.stop = false; // stop all animation when dragging
