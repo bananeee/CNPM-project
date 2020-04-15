@@ -4,7 +4,8 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     preload() {
-
+        this.load.image('background', 'assets/Lesson2/card1.png');
+        this.load.image('background', 'assets/Lesson2/card2.png');
     }
 
     create() {
@@ -15,4 +16,14 @@ class SceneChild2 extends Phaser.Scene {
 
     }
     
+    gameSetup() {
+        //this.
+    }
+
+    cardSetup() {
+        this.card = [];
+        for (let i = 0; i < 8; i++) {
+            this.card.push(this.)
+        }
+    }
 }

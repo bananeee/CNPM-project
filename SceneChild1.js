@@ -4,21 +4,19 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'assets/background.png');
+        this.load.image('pk0', 'assets/Lesson1/Package0.png');
+        this.load.image('pk1', 'assets/Lesson1/Package1.png');
+        this.load.image('pk2', 'assets/Lesson1/Package2.png');
+        this.load.image('pk3', 'assets/Lesson1/Package3.png');
+        this.load.image('pk4', 'assets/Lesson1/Package4.png');
+        this.load.image('pk5', 'assets/Lesson1/Package5.png');
+        this.load.image('pk6', 'assets/Lesson1/Package6.png');
 
-        this.load.image('pk0', 'assets/SceneChild1/Package0.png');
-        this.load.image('pk1', 'assets/SceneChild1/Package1.png');
-        this.load.image('pk2', 'assets/SceneChild1/Package2.png');
-        this.load.image('pk3', 'assets/SceneChild1/Package3.png');
-        this.load.image('pk4', 'assets/SceneChild1/Package4.png');
-        this.load.image('pk5', 'assets/SceneChild1/Package5.png');
-        this.load.image('pk6', 'assets/SceneChild1/Package6.png');
+        this.load.image('trolleyLeft', 'assets/Lesson1/trolley_left.png');
+        this.load.image('trolleyRight', 'assets/Lesson1/trolley_right.png');
 
-        this.load.image('trolleyLeft', 'assets/SceneChild1/trolley_left.png');
-        this.load.image('trolleyRight', 'assets/SceneChild1/trolley_right.png');
-
-        this.load.image('nameTag_left', 'assets/SceneChild1/trolley_left_nametag.png');
-        this.load.image('nametag_right', 'assets/SceneChild1/trolley_right_nametag.png');
+        this.load.image('nameTag_left', 'assets/Lesson1/trolley_left_nametag.png');
+        this.load.image('nametag_right', 'assets/Lesson1/trolley_right_nametag.png');
     }
 
     create() {
@@ -35,6 +33,7 @@ class SceneChild1 extends Phaser.Scene {
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
 
         // DEBUG TEXT
+        this.count = 0;
         this.text1 = this.add.text(32, 32, { fill: '0x32a852' });
         this.text2 = this.add.text(32, 52, { fill: '#32a852' });
         this.text3 = this.add.text(32, 72, { fill: '#32a852' });
@@ -49,7 +48,7 @@ class SceneChild1 extends Phaser.Scene {
         }
 
         // this.text1.setText("Track " + this.packageOnTrack.length);
-        this.text2.setText("Staged " + this.packageStacked.length);
+        this.text2.setText("count: " + this.count);
         this.text3.setText("Stop " + this.stop);
         this.text4.setText("Delay " + this.delay);
         var pointer = this.input.activePointer;
@@ -150,6 +149,7 @@ class SceneChild1 extends Phaser.Scene {
 
 
         this.input.on('dragenter', function(pointer, gameObject, dropZone) {
+            this.count ++;
             dropZone.setTint(0xcdd1ce);
             if (dropZone.name === "weekDays") this.nametagLetf.setTint(0xcdd1ce);
             else
