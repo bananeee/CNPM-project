@@ -1,80 +1,67 @@
-class SceneChild1 extends Phaser.Scene {
+class SceneChild2_1 extends Phaser.Scene {
     constructor() {
-        super("Lesson1");
+        super("Lesson3");
     }
 
     preload() {
-        this.load.image('background', 'assets/background.png');
-        this.load.image('pk0', 'assets/Package1.png');
-        this.load.image('pk1', 'assets/Package2.png');
-        this.load.image('pk2', 'assets/Package3.png');
+   
+        this.load.image('pk0', 'assets/Lesson1/Package0.png');
+        this.load.image('pk1', 'assets/Lesson1/Package1.png');
+        this.load.image('pk2', 'assets/Lesson1/Package2.png');
     }
 
     create() {
-        this.add.image(config.width / 2, config.height / 2, 'background');
+        this.zoneWeekDay = this.add.image(0.23 * config.width, 0.78 * config.height, "trolleyLeft").setName("weekDays").setInteractive();
+        this.zoneWeekDay = this.add.image(0.23 * config.width, 0.78 * config.height, "trolleyLeft").setName("weekDays").setInteractive();
+        
+        this.text1 = this.add.text(32, 32);
+        this.content = 0;
+
         this.pk0 = this.add.image(300, 400, "pk0").setInteractive({ draggable: true });
         this.pk2 = this.add.image(600, 400, "pk2").setInteractive({ draggable: true });
 
-        this.pk0.input.dropZone = true;
-        this.pk2.input.dropZone = true;
-
         this.input.dragDistanceThreshold = 0;
+        
+        // this.physics.add.existing(this.pk0);
+        // this.physics.add.existing(this.pk2);
 
-        this.input.on('dragstart', function(pointer, gameObject) {
-            this.x = gameObject.x;
-            this.y = gameObject.y;
-            // console.log(this.x, this.y);
-
+        this.input.on('dragenter', function(pointer, gameObject, dropZone) {
+            dropZone.setTint(0xcdd1ce);
+            if (dropZone.name === "weekDays") this.nametagLetf.setTint(0xcdd1ce);
+            else
+                this.nametagRight.setTint(0xcdd1ce);
         }, this);
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
-            gameObject.y = dragY;
         });
 
-        this.xx = this.pk2.x;
-        this.yy = this.pk2.y;
-
-        this.input.on('dragenter', function(pointer, gameObject, dropZone) {
-
-            // dropZone.setTint(0x00ff00);
-            // console.log(this.pk0.x, this.pk0.y);
-            // console.log(dropZone.x, dropZone.y);
-
-            // var xx = dropZone.x;
-            // var yy = dropZone.y;
-
-            dropZone.x = gameObject.input.dragStartX;
-            dropZone.y = gameObject.input.dragStartY;
-
-            // this.x = xx;
-            // this.y = yy;
-            // console.log(this.xx, this.yy);
-        }, this);
-
-        this.input.on('dragleave', function(pointer, gameObject, dropZone) {
-
-            // dropZone.clearTint();
-            // console.log(this.xx, this.yy);
-
-
-        }, this);
-
-        this.input.on('dragend', function(pointer, gameObject, dropped) {
-            // console.log(this.x, this.y)
-            if (dropped) {
-                gameObject.x = this.xx;
-                gameObject.y = this.yy;
-            }
-
-            console.log(this.xx, this.yy);
-
-        }, this);
-
-
-
+        
     }
+
+    update() {
+        this.text1.text = this.content;
+        // if (this.checkOverlap(this.pk0, this.pk2))
+        // {
+        //     this.text1.text = 'Overlapping: true';
+        // }
+        // else
+        // {
+        //     this.text1.text = 'Overlapping: false';
+        // }
+    }
+    
+    // checkOverlap(image1, image2) {
+
+    //     var boundsA = image1.getBounds();
+    //     var boundsB = image2.getBounds();
+    
+    //     return Phaser.Rectangle.intersects(boundsA, boundsB);
+    
+    // }
+
 }
+
 
 
 // this.packageStaged = [];
