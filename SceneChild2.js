@@ -23,7 +23,7 @@ class SceneChild2 extends Phaser.Scene {
     cardSetup() {
         this.card = [];
         for (let i = 0; i < 8; i++) {
-            this.card.push(this.)
+            //this.card.push(this.)
         }
     }
 }
