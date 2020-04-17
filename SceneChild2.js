@@ -22,6 +22,7 @@ class SceneChild2 extends Phaser.Scene {
 
         this.cardSetup();
 
+        this.inputManager();
 
     }
 
@@ -29,42 +30,45 @@ class SceneChild2 extends Phaser.Scene {
 
     }
 
+    swap(a, b) {
+        let temp = a;
+        a = b;
+        b = a;
+    }
+
     inputManager() {
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
+            console.log(gameObject.name);
         }, this);
 
-        // this.input.on('dragenter', function(pointer, gameObject, dropZone) {
-        //     if (gameObject.name != dropZone.name) {
+        this.input.on('dragenter', function(pointer, gameObject, dropZone) {
+            if (gameObject.name != dropZone.name) {
 
-        //         var temp = dropZone.x;
+                let tempNameGameObject = gameObject.name;
 
-        //         this.refname[dropZone.name].x = gameObject.input.dragStartX;
-
-        //         gameObject.input.dragStartX = temp;
-
-
-        //         var tempName = this.refname[dropZone.name].name;
-        //         var tempNameGameObject = gameObject.name;
-
-        //         this.refname[dropZone.name].setName(gameObject.name);
-
-        //         gameObject.setName(tempName);
+                let temp = dropZone.x;
+                this.arrayCardsConfuse[dropZone.name].x = gameObject.input.dragStartX;
+                gameObject.input.dragStartX = temp;
 
 
-        //         var tempObject = this.refname[dropZone.name];
 
-        //         this.refname[dropZone.name] = this.refname[tempNameGameObject];
+                temp = this.arrayCardsConfuse[dropZone.name].name;
+                this.arrayCardsConfuse[dropZone.name].setName(gameObject.name);
+                gameObject.setName(temp);
 
-        //         this.refname[tempNameGameObject] = tempObject;
 
-        //     }
+                temp = this.arrayCardsConfuse[dropZone.name];
+                this.arrayCardsConfuse[dropZone.name] = this.arrayCardsConfuse[tempNameGameObject];
+                this.arrayCardsConfuse[tempNameGameObject] = temp;
 
-        // }, this);
+            }
 
-        // this.input.on('dragend', function(pointer, gameObject, dropped) {
-        //     gameObject.x = gameObject.input.dragStartX;
-        // }, this);
+        }, this);
+
+        this.input.on('dragend', function(pointer, gameObject, dropped) {
+            gameObject.x = gameObject.input.dragStartX;
+        }, this);
 
     }
 
