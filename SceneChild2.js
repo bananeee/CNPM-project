@@ -12,9 +12,13 @@ class SceneChild2 extends Phaser.Scene {
         this.load.image('pk5', 'assets/Lesson2/action5.png');
         this.load.image('pk6', 'assets/Lesson2/action6.png');
         this.load.image('pk7', 'assets/Lesson2/action7.png');
+
+        this.load.image('btn', 'assets/Lesson2/apple_buton.png');
     }
 
     create() {
+
+
 
         this.gameSetup();
 
@@ -24,22 +28,59 @@ class SceneChild2 extends Phaser.Scene {
 
         this.inputManager();
 
+        this.button = this.add.image(100, 100, "btn").setInteractive();
+
+        this.button.on("pointerdown", function() {
+
+            console.log("true");
+            if (!this.checkWrongCards()) {
+                this.drawBorderRed();
+            }
+        }, this);
+
     }
 
     update() {
 
     }
 
-    swap(a, b) {
-        let temp = a;
-        a = b;
-        b = a;
+
+    drawBorderRed() {
+        this.graphics = this.add.graphics();
+
+        this.graphics.lineStyle(2, 0xc41d29);
+
+        for (let i = this.arrayWrongCards.length - 1; i >= 0; i--) {
+            this.graphics.strokeRoundedRect(this.arrayWrongCards[i].x - this.arrayWrongCards[i].input.hitArea.width / 2,
+                this.arrayWrongCards[i].y - this.arrayWrongCards[i].input.hitArea.height / 2,
+                this.arrayWrongCards[i].input.hitArea.width,
+                this.arrayWrongCards[i].input.hitArea.height,
+                15);
+        }
     }
 
+    checkWrongCards() {
+        let check = true;
+        for (let i = this.arrayCardsConfuse.length - 1; i >= 0; i--) {
+            if (i != this.arrayCardsConfuse[i].state) {
+                this.arrayWrongCards.push(this.arrayCardsConfuse[i]);
+                check = false;
+            }
+        }
+        return check;
+    }
+
+
     inputManager() {
+
+        this.input.on('dragstart', function(pointer, gameObject) {
+            this.graphics.clear();
+            this.children.bringToTop(gameObject);
+        }, this);
+
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
-            console.log(gameObject.name);
+
         }, this);
 
         this.input.on('dragenter', function(pointer, gameObject, dropZone) {
@@ -58,10 +99,10 @@ class SceneChild2 extends Phaser.Scene {
                 gameObject.setName(temp);
 
 
+
                 temp = this.arrayCardsConfuse[dropZone.name];
                 this.arrayCardsConfuse[dropZone.name] = this.arrayCardsConfuse[tempNameGameObject];
                 this.arrayCardsConfuse[tempNameGameObject] = temp;
-
             }
 
         }, this);
@@ -81,6 +122,8 @@ class SceneChild2 extends Phaser.Scene {
         this.arrayCardsConfuse = [];
 
         this.arrayZone = [];
+
+        this.arrayWrongCards = [];
     }
 
     cardSetup() {
@@ -108,19 +151,19 @@ class SceneChild2 extends Phaser.Scene {
 
     setUpDropzone() {
 
-        var graphics = this.add.graphics();
+        // var graphics = this.add.graphics();
 
-        graphics.lineStyle(2, 0xffff00);
+        // graphics.lineStyle(2, 0xffff00);
 
         for (let i = 0; i <= 7; i++) {
             this.arrayZone.push(this.add.zone(config.width * this.coordinateImage.x[i], config.height * this.coordinateImage.y[i], 107, window.innerHeight)
                 .setName(i)
                 .setRectangleDropZone(107, window.innerHeight));
 
-            graphics.strokeRect(this.arrayZone[i].x - this.arrayZone[i].input.hitArea.width / 2,
-                this.arrayZone[i].y - this.arrayZone[i].input.hitArea.height / 2,
-                this.arrayZone[i].input.hitArea.width,
-                this.arrayZone[i].input.hitArea.height);
+            // graphics.strokeRect(this.arrayZone[i].x - this.arrayZone[i].input.hitArea.width / 2,
+            //     this.arrayZone[i].y - this.arrayZone[i].input.hitArea.height / 2,
+            //     this.arrayZone[i].input.hitArea.width,
+            //     this.arrayZone[i].input.hitArea.height);
         }
 
     }
