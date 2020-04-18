@@ -4,6 +4,8 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('loader', 'assets/Lesson1/loader.png');
+
         this.load.image('pk0', 'assets/Lesson1/Package0.png');
         this.load.image('pk1', 'assets/Lesson1/Package1.png');
         this.load.image('pk2', 'assets/Lesson1/Package2.png');
@@ -21,6 +23,8 @@ class SceneChild1 extends Phaser.Scene {
 
     create() {
         this.gameSetup();
+
+        this.setupLoader();
 
         this.setUpDropzone();
 
@@ -44,7 +48,7 @@ class SceneChild1 extends Phaser.Scene {
 
     update() {
         if (this.packageOnTrack.length != 0 && !this.stop) {
-            this.move(3);
+            this.move(2);
         }
 
         // this.text1.setText("Track " + this.packageOnTrack.length);
@@ -66,7 +70,7 @@ class SceneChild1 extends Phaser.Scene {
         this.packageStacked = []; // package wait to be displayed
         this.packageOnTrack = []; // package is being displayed
 
-        this.duration = 1000; // duration for animation
+        this.duration = {true: 1000, false: 1000 - 500}; // duration for animation. True if correct answer, False if wrong
 
         this.slotWeekday = 0;
         this.slotWeekend = 5;
@@ -81,6 +85,10 @@ class SceneChild1 extends Phaser.Scene {
             left: { x: 234, y: 582 },
             right: { x: 789, y: 582 }
         }
+    }
+
+    setupLoader() {
+        this.loader = this.add.tileSprite(config.width / 2, config.height * 0.471, config.width, 15, 'loader' );
     }
 
     // Drop zone 
@@ -181,7 +189,7 @@ class SceneChild1 extends Phaser.Scene {
                     this.slotWeekend++;
                 }
                 gameObject.setScale(1 / 1.5);
-                this.tweenItem(gameObject, packagePos.x, packagePos.y, this.duration);
+                this.tweenItem(gameObject, packagePos.x, packagePos.y, this.duration.true);
 
             } else {
                 // Fill color nametags
@@ -199,14 +207,14 @@ class SceneChild1 extends Phaser.Scene {
             gameObject.clearTint();
             
             if (!dropped) {
-                this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration);
+                this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true);
             } else if (dropped && !this.correctDrop) {
-                var timedEvent = this.time.delayedCall(500, function() {
-                    this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration - 500);
+                var timedEvent = this.time.delayedCall(duration.false, function() {
+                    this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true - this.duration.false);
                 }, [], this);
             }
 
-            var timedEvent = this.time.delayedCall(this.duration, function() {
+            var timedEvent = this.time.delayedCall(this.duration.true, function() {
                 this.stop = false;
                 this.nametagLetf.clearTint();
                 this.nametagRight.clearTint();
@@ -235,6 +243,7 @@ class SceneChild1 extends Phaser.Scene {
             }
             i++;
         }
+        this.loader.tilePositionX -= speed;
     }
 
     // moving item to position
