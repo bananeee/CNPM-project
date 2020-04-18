@@ -12,14 +12,11 @@ class SceneChild2 extends Phaser.Scene {
         this.load.image('pk5', 'assets/Lesson2/action5.png');
         this.load.image('pk6', 'assets/Lesson2/action6.png');
         this.load.image('pk7', 'assets/Lesson2/action7.png');
-
-        this.load.image('btn', 'assets/Lesson2/apple_buton.png');
+        this.load.image('restart', 'assets/Lesson2/restart_button.png');
+        this.load.image('done', 'assets/Lesson2/done_button.png');
     }
 
     create() {
-
-
-
         this.gameSetup();
 
         this.setUpDropzone();
@@ -28,22 +25,20 @@ class SceneChild2 extends Phaser.Scene {
 
         this.inputManager();
 
-        this.button = this.add.image(100, 100, "btn").setInteractive();
-
-        this.button.on("pointerdown", function() {
-
-            console.log("true");
-            if (!this.checkWrongCards()) {
-                this.drawBorderRed();
-            }
-        }, this);
-
     }
 
     update() {
 
     }
 
+    tweenItem(gameObject, desX, durations) {
+        var tween = this.tweens.add({
+            targets: gameObject,
+            x: desX,
+            duration: durations,
+            ease: 'Linear'
+        });
+    }
 
     drawBorderRed() {
         this.graphics = this.add.graphics();
@@ -70,34 +65,45 @@ class SceneChild2 extends Phaser.Scene {
         return check;
     }
 
-
     inputManager() {
+        this.btnDone.on("pointerdown", function() {
+            if (!this.checkWrongCards()) {
+                this.drawBorderRed();
+            }
+        }, this);
+
+        for (let i = this.arrayCardsConfuse.length - 1; i >= 0; i--) {
+            this.arrayCardsConfuse[i].on('pointerover', function(pointer) {
+                this.arrayCardsConfuse[i].setTint(0xcdd1ce);
+            }, this);
+
+            this.arrayCardsConfuse[i].on('pointerout', function(pointer) {
+                this.arrayCardsConfuse[i].clearTint();
+            }, this);
+        }
 
         this.input.on('dragstart', function(pointer, gameObject) {
             this.children.bringToTop(gameObject);
+
         }, this);
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
             this.graphics.clear();
+
         }, this);
 
         this.input.on('dragenter', function(pointer, gameObject, dropZone) {
             if (gameObject.name != dropZone.name) {
-
                 let tempNameGameObject = gameObject.name;
 
                 let temp = dropZone.x;
-                this.arrayCardsConfuse[dropZone.name].x = gameObject.input.dragStartX;
+                this.tweenItem(this.arrayCardsConfuse[dropZone.name], gameObject.input.dragStartX, this.duration);
                 gameObject.input.dragStartX = temp;
-
-
 
                 temp = this.arrayCardsConfuse[dropZone.name].name;
                 this.arrayCardsConfuse[dropZone.name].setName(gameObject.name);
                 gameObject.setName(temp);
-
-
 
                 temp = this.arrayCardsConfuse[dropZone.name];
                 this.arrayCardsConfuse[dropZone.name] = this.arrayCardsConfuse[tempNameGameObject];
@@ -118,6 +124,13 @@ class SceneChild2 extends Phaser.Scene {
             y: [0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63]
         }
 
+        this.coordinateButton = {
+            restart: { x: 0.38, y: 0.91 },
+            done: { x: 0.62, y: 0.91 }
+        }
+
+        this.duration = 100;
+
         this.arrayCardsConfuse = [];
 
         this.arrayZone = [];
@@ -126,6 +139,14 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     cardSetup() {
+        this.btnRestart = this.add.image(this.coordinateButton.restart.x * config.width,
+            this.coordinateButton.restart.y * config.height,
+            "restart").setInteractive();
+
+        this.btnDone = this.add.image(this.coordinateButton.done.x * config.width,
+            this.coordinateButton.done.y * config.height,
+            "done").setInteractive();
+
         let arrayCardsCorrect = [];
         for (let i = 0; i <= 7; i++) {
             arrayCardsCorrect.push(this.add.image(config.width * this.coordinateImage.x[i], config.height * this.coordinateImage.y[i], 'pk' + i)
