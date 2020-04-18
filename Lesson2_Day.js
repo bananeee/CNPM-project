@@ -37,7 +37,7 @@ class Lesson2_Day extends Phaser.Scene {
     gameSetup() {
         this.buttonNext = this.add.image(config.width * 0.5, config.height * 0.9, 'btn_next');
         this.buttonNext.setInteractive().on('pointerdown', function() {
-            this.scene.start('Lesson3');   
+            this.scene.start('Lesson2');   
         }, this).visible = false;
 
         this.coordinateImage = {

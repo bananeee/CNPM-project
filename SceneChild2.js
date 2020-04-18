@@ -74,13 +74,12 @@ class SceneChild2 extends Phaser.Scene {
     inputManager() {
 
         this.input.on('dragstart', function(pointer, gameObject) {
-            this.graphics.clear();
             this.children.bringToTop(gameObject);
         }, this);
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
-
+            this.graphics.clear();
         }, this);
 
         this.input.on('dragenter', function(pointer, gameObject, dropZone) {

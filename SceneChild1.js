@@ -209,7 +209,7 @@ class SceneChild1 extends Phaser.Scene {
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true);
             } else if (dropped && !this.correctDrop) {
-                var timedEvent = this.time.delayedCall(duration.false, function() {
+                var timedEvent = this.time.delayedCall(this.duration.false, function() {
                     this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true - this.duration.false);
                 }, [], this);
             }

@@ -15,7 +15,7 @@ class SceneRoot extends Phaser.Scene {
 
         this.add.image(600, 200, 'button2').setInteractive().on('pointerdown', function(){
             console.log('change scene');
-            this.scene.start('Lesson3');           
+            this.scene.start('Lesson2D');           
         }, this);
 
 
