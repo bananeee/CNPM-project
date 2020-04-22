@@ -27,11 +27,49 @@ class SceneChild2 extends Phaser.Scene {
 
         this.cardSetup();
 
+        this.buttonSetup();
+
         this.inputManager();
 
     }
 
     update() {
+
+    }
+
+    //Ham restart
+    restartArray() {
+
+        for (let i = 0; i <= 7; i++) {
+            this.arrayCardsConfuseClone[this.arraySaveState[this.arrayCardsConfuse[i].state]] = this.arrayCardsConfuse[i];
+        }
+
+        for (let i = 0; i <= 7; i++) {
+            this.arrayCardsConfuse[i] = this.arrayCardsConfuseClone[i];
+            this.tweenItem(this.arrayCardsConfuse[i], config.width * this.coordinateImage.x[i], this.duration);
+            this.arrayCardsConfuse[i].setName(i);
+        }
+    }
+
+    buttonSetup() {
+        // Nhan restart 
+        this.btnRestart = this.add.image(this.coordinateButton.restart.x * config.width,
+            this.coordinateButton.restart.y * config.height,
+            "restart").setInteractive().on("pointerdown", function() {
+            this.restartArray();
+        }, this);
+
+        // Nhan Button DONE thi ve bien cua image
+        this.btnDone = this.add.image(this.coordinateButton.done.x * config.width,
+                this.coordinateButton.done.y * config.height,
+                "done")
+            .setInteractive()
+            .on("pointerdown", function() {
+                // Check co Card sai thi draw border
+                if (!this.checkWrongCards()) {
+                    this.drawBorderRed();
+                }
+            }, this);;
 
     }
 
@@ -45,6 +83,9 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     drawBorderRed() {
+
+        this.checkDrawBorder = true;
+
         this.graphics = this.add.graphics();
 
         this.graphics.lineStyle(2, 0xc41d29);
@@ -56,11 +97,13 @@ class SceneChild2 extends Phaser.Scene {
                 this.arrayWrongCards[i].input.hitArea.height,
                 15);
         }
+
+        this.arrayWrongCards = [];
     }
 
     checkWrongCards() {
         let check = true;
-        for (let i = this.arrayCardsConfuse.length - 1; i >= 0; i--) {
+        for (let i = 0; i <= 7; i++) {
             if (i != this.arrayCardsConfuse[i].state) {
                 this.arrayWrongCards.push(this.arrayCardsConfuse[i]);
                 check = false;
@@ -70,21 +113,6 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     inputManager() {
-        this.btnDone.on("pointerdown", function() {
-            if (!this.checkWrongCards()) {
-                this.drawBorderRed();
-            }
-        }, this);
-
-        for (let i = this.arrayCardsConfuse.length - 1; i >= 0; i--) {
-            this.arrayCardsConfuse[i].on('pointerover', function(pointer) {
-                this.arrayCardsConfuse[i].setTint(0xcdd1ce);
-            }, this);
-
-            this.arrayCardsConfuse[i].on('pointerout', function(pointer) {
-                this.arrayCardsConfuse[i].clearTint();
-            }, this);
-        }
 
         this.input.on('dragstart', function(pointer, gameObject) {
             this.children.bringToTop(gameObject);
@@ -93,7 +121,10 @@ class SceneChild2 extends Phaser.Scene {
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
-            this.graphics.clear();
+            if (this.checkDrawBorder) {
+                this.graphics.clear();
+                this.checkDrawBorder = false;
+            }
 
         }, this);
 
@@ -137,24 +168,28 @@ class SceneChild2 extends Phaser.Scene {
 
         this.arrayCardsConfuse = [];
 
+        this.arrayCardsConfuseClone = [0, 0, 0, 0, 0, 0, 0, 0];
+
+        this.arraySaveState = [0, 0, 0, 0, 0, 0, 0, 0];
+
         this.arrayZone = [];
 
         this.arrayWrongCards = [];
     }
 
     cardSetup() {
-        this.btnRestart = this.add.image(this.coordinateButton.restart.x * config.width,
-            this.coordinateButton.restart.y * config.height,
-            "restart").setInteractive();
 
-        this.btnDone = this.add.image(this.coordinateButton.done.x * config.width,
-            this.coordinateButton.done.y * config.height,
-            "done").setInteractive();
 
         let arrayCardsCorrect = [];
         for (let i = 0; i <= 7; i++) {
             arrayCardsCorrect.push(this.add.image(config.width * this.coordinateImage.x[i], config.height * this.coordinateImage.y[i], 'pk' + i)
                 .setState(i)
+                .on('pointerover', function(pointer) {
+                    this.setTint(0xcdd1ce);
+                })
+                .on('pointerout', function(pointer) {
+                    this.clearTint();
+                })
                 .setInteractive({ draggable: true }));
         }
 
@@ -165,29 +200,21 @@ class SceneChild2 extends Phaser.Scene {
             arrayCardsCorrect[index].x = config.width * this.coordinateImage.x[i];
             arrayCardsCorrect[index].y = config.height * this.coordinateImage.y[i];
             arrayCardsCorrect[index].setName(i);
+            this.arraySaveState[arrayCardsCorrect[index].state] = i;
             i++;
 
             this.arrayCardsConfuse.push(arrayCardsCorrect[index]);
-
             arrayCardsCorrect.splice(index, 1);
         }
+
     }
 
     setUpDropzone() {
-
-        // var graphics = this.add.graphics();
-
-        // graphics.lineStyle(2, 0xffff00);
 
         for (let i = 0; i <= 7; i++) {
             this.arrayZone.push(this.add.zone(config.width * this.coordinateImage.x[i], config.height * this.coordinateImage.y[i], 107, window.innerHeight)
                 .setName(i)
                 .setRectangleDropZone(107, window.innerHeight));
-
-            // graphics.strokeRect(this.arrayZone[i].x - this.arrayZone[i].input.hitArea.width / 2,
-            //     this.arrayZone[i].y - this.arrayZone[i].input.hitArea.height / 2,
-            //     this.arrayZone[i].input.hitArea.width,
-            //     this.arrayZone[i].input.hitArea.height);
         }
 
     }
