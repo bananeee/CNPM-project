@@ -4,6 +4,7 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('back', 'assets/back.png');
         this.load.image('loader', 'assets/Lesson1/loader.png');
 
         this.load.image('pk0', 'assets/Lesson1/Package0.png');
@@ -23,6 +24,8 @@ class SceneChild1 extends Phaser.Scene {
 
     create() {
         this.gameSetup();
+
+        this.backButtonSetup();
 
         this.setupLoader();
 
@@ -274,6 +277,17 @@ class SceneChild1 extends Phaser.Scene {
             this.packageOnTrack.push(this.packageStacked.shift());
         }
 
+    }
+
+    backButtonSetup() {
+        this.backBtn = this.add.image(config.width * 0.05, config.height * 0.1, 'back');
+        this.backBtn.setInteractive().on('pointerover', function() {
+            this.setAlpha(0.5);
+        }).on('pointerout', function() {
+            this.setAlpha(2);   
+        }).on('pointerdown', function() {
+            this.scene.start('Menu');
+        }, this)
     }
 
 }

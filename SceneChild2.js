@@ -4,6 +4,8 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('back', 'assets/back.png');
+
         this.load.image('pk0', 'assets/Lesson2/action0.png');
         this.load.image('pk1', 'assets/Lesson2/action1.png');
         this.load.image('pk2', 'assets/Lesson2/action2.png');
@@ -17,6 +19,8 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     create() {
+        this.backButtonSetup();
+
         this.gameSetup();
 
         this.setUpDropzone();
@@ -186,5 +190,16 @@ class SceneChild2 extends Phaser.Scene {
             //     this.arrayZone[i].input.hitArea.height);
         }
 
+    }
+
+    backButtonSetup() {
+        this.backBtn = this.add.image(config.width * 0.05, config.height * 0.1, 'back');
+        this.backBtn.setInteractive().on('pointerover', function() {
+            this.setAlpha(0.5);
+        }).on('pointerout', function() {
+            this.setAlpha(2);   
+        }).on('pointerdown', function() {
+            this.scene.start('Menu');
+        }, this)
     }
 }
