@@ -5,6 +5,7 @@ class Lesson2_Day extends Phaser.Scene {
 
     preload() {
         this.load.image('back', 'assets/back.png');
+        this.load.image('start2', 'assets/Lesson2/orange.png');
 
         this.load.image('btn', 'assets/Lesson2/ok.png');
         this.load.image('btn_next', 'assets/Lesson2/next_button.png');
@@ -31,6 +32,8 @@ class Lesson2_Day extends Phaser.Scene {
         this.backButtonSetup();
         this.gameSetup();
         this.cardSetup();
+
+        this.startGameUI();
     }
 
     update() {
@@ -39,12 +42,12 @@ class Lesson2_Day extends Phaser.Scene {
 
     gameSetup() {
         this.buttonNext = this.add.image(config.width * 0.5, config.height * 0.9, 'btn_next');
-        this.buttonNext.setInteractive().on('pointerdown', function() {
-            this.scene.start('Lesson2');   
-        }, this).on('pointerover', function() {
-            this.setTint(0x75ffff);   
-        }).on('pointerout', function() {
-            this.clearTint(); ;
+        this.buttonNext.setInteractive().on('pointerdown', function () {
+            this.scene.start('Lesson2');
+        }, this).on('pointerover', function () {
+            this.setTint(0x75ffff);
+        }).on('pointerout', function () {
+            this.clearTint();;
         }).visible = false;
 
         this.coordinateImage = {
@@ -55,13 +58,15 @@ class Lesson2_Day extends Phaser.Scene {
 
     cardSetup() {
         this.card = [];
-        
+
         for (let i = 0; i <= 7; i++) {
-            this.card.push({image: this.add.image(config.width * this.coordinateImage.x[i], 
-                                config.height * this.coordinateImage.y[i], 'card' + i),
-                        button: this.add.image(config.width * this.coordinateImage.x[i], 
-                                config.height * this.coordinateImage.y[i] + 30, 'btn')});
-            
+            this.card.push({
+                image: this.add.image(config.width * this.coordinateImage.x[i],
+                    config.height * this.coordinateImage.y[i], 'card' + i),
+                button: this.add.image(config.width * this.coordinateImage.x[i],
+                    config.height * this.coordinateImage.y[i] + 30, 'btn')
+            });
+
             if (i != 0) {
                 this.card[i].image.visible = false;
                 this.card[i].button.visible = false;
@@ -82,24 +87,24 @@ class Lesson2_Day extends Phaser.Scene {
     }
 
     buttonInteraction(button, i) {
-        button.setInteractive().on('pointerdown', function() {
+        button.setInteractive().on('pointerdown', function () {
             if (i == 7) {
                 this.buttonNext.visible = true;
             } else {
-                this.card[ i+1 ].image.visible = true;
-                this.card[ i+1 ].button.visible = true;
-            }  
+                this.card[i + 1].image.visible = true;
+                this.card[i + 1].button.visible = true;
+            }
             this.card[i].image.destroy();
             this.card[i].button.destroy();
-            this.card[i].image = this.add.image(config.width * this.coordinateImage.x[i], 
+            this.card[i].image = this.add.image(config.width * this.coordinateImage.x[i],
                 config.height * this.coordinateImage.y[i], 'action' + i)
         }, this);
-        
-        button.setInteractive().on('pointerover', function() {
+
+        button.setInteractive().on('pointerover', function () {
             button.setTint(0x75ffff);
         })
 
-        button.setInteractive().on('pointerout', function() {
+        button.setInteractive().on('pointerout', function () {
             button.clearTint();
         })
 
@@ -108,12 +113,31 @@ class Lesson2_Day extends Phaser.Scene {
 
     backButtonSetup() {
         this.backBtn = this.add.image(config.width * 0.05, config.height * 0.1, 'back');
-        this.backBtn.setInteractive().on('pointerover', function() {
+        this.backBtn.setInteractive().on('pointerover', function () {
             this.setAlpha(0.5);
-        }).on('pointerout', function() {
-            this.setAlpha(2);   
-        }).on('pointerdown', function() {
+        }).on('pointerout', function () {
+            this.setAlpha(2);
+        }).on('pointerdown', function () {
             this.scene.start('Menu');
-        })
+        }, this);
+    }
+
+    startGameUI() {
+        this.cover = new Phaser.Geom.Rectangle(0, 0, config.width, config.height);
+
+        this.graphicCover = this.add.graphics({ fillStyle: { color: 0xffffff } })
+                                .fillRectShape(this.cover)
+                                .setAlpha(0.4);
+
+        this.startGameBtn = this.add.image(config.width / 2, config.height / 2, 'start2').setInteractive();
+        this.startGameBtn.on('pointerover', function () {
+            this.setAlpha(0.8);
+        }).on('pointerout', function () {
+            this.setAlpha(1 / 0.8);
+        }).on('pointerdown', function () {
+            this.graphicCover.destroy();
+            this.startGameBtn.destroy();
+        }, this);
+
     }
 }

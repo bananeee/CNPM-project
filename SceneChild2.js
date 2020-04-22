@@ -6,20 +6,19 @@ class SceneChild2 extends Phaser.Scene {
     preload() {
         this.load.image('back', 'assets/back.png');
 
-        this.load.image('pk0', 'assets/Lesson2/action0.png');
-        this.load.image('pk1', 'assets/Lesson2/action1.png');
-        this.load.image('pk2', 'assets/Lesson2/action2.png');
-        this.load.image('pk3', 'assets/Lesson2/action3.png');
-        this.load.image('pk4', 'assets/Lesson2/action4.png');
-        this.load.image('pk5', 'assets/Lesson2/action5.png');
-        this.load.image('pk6', 'assets/Lesson2/action6.png');
-        this.load.image('pk7', 'assets/Lesson2/action7.png');
+        this.load.image('action0', 'assets/Lesson2/action0.png');
+        this.load.image('action1', 'assets/Lesson2/action1.png');
+        this.load.image('action2', 'assets/Lesson2/action2.png');
+        this.load.image('action3', 'assets/Lesson2/action3.png');
+        this.load.image('action4', 'assets/Lesson2/action4.png');
+        this.load.image('action5', 'assets/Lesson2/action5.png');
+        this.load.image('action6', 'assets/Lesson2/action6.png');
+        this.load.image('action7', 'assets/Lesson2/action7.png');
         this.load.image('restart', 'assets/Lesson2/restart_button.png');
         this.load.image('done', 'assets/Lesson2/done_button.png');
     }
 
     create() {
-        this.backButtonSetup();
 
         this.gameSetup();
 
@@ -30,6 +29,8 @@ class SceneChild2 extends Phaser.Scene {
         this.buttonSetup();
 
         this.inputManager();
+
+        this.backButtonSetup();
 
     }
 
@@ -57,6 +58,10 @@ class SceneChild2 extends Phaser.Scene {
             this.coordinateButton.restart.y * config.height,
             "restart").setInteractive().on("pointerdown", function() {
             this.restartArray();
+            if (this.checkDrawBorder) {
+                this.graphics.clear();
+                this.checkDrawBorder = false;
+            }
         }, this);
 
         // Nhan Button DONE thi ve bien cua image
@@ -182,7 +187,7 @@ class SceneChild2 extends Phaser.Scene {
 
         let arrayCardsCorrect = [];
         for (let i = 0; i <= 7; i++) {
-            arrayCardsCorrect.push(this.add.image(config.width * this.coordinateImage.x[i], config.height * this.coordinateImage.y[i], 'pk' + i)
+            arrayCardsCorrect.push(this.add.image(config.width * this.coordinateImage.x[i], config.height * this.coordinateImage.y[i], 'action' + i)
                 .setState(i)
                 .on('pointerover', function(pointer) {
                     this.setTint(0xcdd1ce);
