@@ -8,12 +8,12 @@ class SceneRoot extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(200, 200, 'button1').setInteractive().on('pointerdown', function(){
+        this.add.image(0.325 * config.width,0.5 * config.height, 'button1').setInteractive().on('pointerdown', function(){
             console.log('change scene');
             this.scene.start('Lesson1');           
         }, this);
 
-        this.add.image(600, 200, 'button2').setInteractive().on('pointerdown', function(){
+        this.add.image(0.675 * config.width,0.5 * config.height, 'button2').setInteractive().on('pointerdown', function(){
             console.log('change scene');
             this.scene.start('Lesson2D');           
         }, this);
