@@ -32,18 +32,16 @@ class Lesson2_Day extends Phaser.Scene {
         this.backButtonSetup();
         this.gameSetup();
         this.cardSetup();
-        this.timeDisplay();
     }
 
     update() {
 
     }
 
-    // Hiển thị thời gian
-    timeDisplay() {
-        this.time = [ "7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"	];
+   
+ 
         
-    }
+        
 
 
     gameSetup() {
@@ -60,6 +58,9 @@ class Lesson2_Day extends Phaser.Scene {
             x: [19 / 229, 0.2, 73 / 229, 100 / 229, 127 / 229, 154 / 229, 181 / 229, 209 / 229],
             y: [0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63]
         }
+
+         // Hiển thị thời gian
+        this.time = [ "7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"	];
     }
 
     cardSetup() {
@@ -67,13 +68,15 @@ class Lesson2_Day extends Phaser.Scene {
 
         for (let i = 0; i <= 7; i++) {
             this.card.push({
-                image: this.add.image(config.width * this.coordinateImage.x[i],
-                    config.height * this.coordinateImage.y[i], 'card' + i),
-                button: this.add.image(config.width * this.coordinateImage.x[i],
-                    config.height * this.coordinateImage.y[i] + 30, 'btn'),
-                time: this.add.text((this.coordinateImage.x[i] - 0.03)*config.width, (this.coordinateImage.y[i] - 0.24)*config.height, this.time[i]).setFontFamily('Arial').setFontSize(30).setColor('#000000')
+                image: this.add.image( config.width * this.coordinateImage.x[i],
+                    config.height * this.coordinateImage.y[i], 'card' + i ),
+                button: this.add.image( config.width * this.coordinateImage.x[i],
+                    config.height * this.coordinateImage.y[i] + 30, 'btn' ),
+                time: this.add.text( (this.coordinateImage.x[i]) * config.width, 
+                    (this.coordinateImage.y[i] - 0.24) * config.height, 
+                    this.time[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
             });
-
+     
             if (i != 0) {
                 this.card[i].image.visible = false;
                 this.card[i].button.visible = false;
