@@ -1,6 +1,6 @@
 class SceneChild2 extends Phaser.Scene {
     constructor() {
-        super("Lesson2D_2");
+        super("Lesson2");
     }
 
     preload() {
@@ -32,10 +32,41 @@ class SceneChild2 extends Phaser.Scene {
 
         this.backButtonSetup();
     
+        this.CheckWobble();
+
     }
 
     update() {
 
+    }
+
+    CheckWobble() {
+        this.timedEvent = this.time.addEvent({
+            delay: 10000,
+            callback: function() {
+                for (let i = 0; i <= 7; i++) {
+                    if (this.arrayCardsConfuse[i].state != i) {
+                        this.Wobble(this.arrayCardsConfuse[i], this.duration);
+                        break;
+                    }
+                }
+            },
+            callbackScope: this,
+            loop: true
+        }, this);
+    }
+
+    Wobble(gameObject, durations) {
+        this.wobbleTween = this.tweens.add({
+            targets: gameObject,
+            x: gameObject.x + 15,
+            duration: durations,
+            yoyo: true,
+            repeat: 5,
+            ease: 'Sine.easeInOut',
+            delay: 2,
+            paused: false
+        });
     }
 
     //Ham restart
