@@ -1,6 +1,6 @@
 class Lesson2_Day extends Phaser.Scene {
     constructor() {
-        super("Lesson2D");
+        super("Lesson2D_1");
     }
 
     preload() {
@@ -41,9 +41,9 @@ class Lesson2_Day extends Phaser.Scene {
     gameSetup() {
         this.buttonNext = this.add.image(config.width * 0.5, config.height * 0.9, 'btn_next');
         this.buttonNext.setInteractive().on('pointerdown', function () {
-            this.scene.start('Lesson2');
+            this.scene.start('Lesson2D_2');
         }, this).on('pointerover', function () {
-            this.setTint(0x75ffff);
+            this.setTint(0x03b5fc);
         }).on('pointerout', function () {
             this.clearTint();;
         }).visible = false;
@@ -99,7 +99,7 @@ class Lesson2_Day extends Phaser.Scene {
         }, this);
 
         button.setInteractive().on('pointerover', function () {
-            button.setTint(0x75ffff);
+            button.setTint(0x03b5fc);
         })
 
         button.setInteractive().on('pointerout', function () {

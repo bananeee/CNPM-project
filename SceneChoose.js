@@ -39,7 +39,7 @@ class SceneChoose extends Phaser.Scene {
         }).on('pointerout', function () {
             this.clearTint();
         }).on('pointerdown', function () {
-            this.scene.start('Menu');
+            this.scene.start('Lesson2D_1');
         }, this);
 
         this.afternoonBtn.on('pointerover', function () {
@@ -47,7 +47,7 @@ class SceneChoose extends Phaser.Scene {
         }).on('pointerout', function () {
             this.clearTint();
         }).on('pointerdown', function () {
-            this.scene.start('Menu');
+            // this.scene.start('Menu');
         }, this);
     }
 

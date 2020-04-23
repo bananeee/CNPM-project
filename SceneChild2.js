@@ -1,6 +1,6 @@
 class SceneChild2 extends Phaser.Scene {
     constructor() {
-        super("Lesson2");
+        super("Lesson2D_2");
     }
 
     preload() {
@@ -29,6 +29,8 @@ class SceneChild2 extends Phaser.Scene {
         this.buttonSetup();
 
         this.inputManager();
+
+        this.backButtonSetup();
     }
 
     update() {

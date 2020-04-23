@@ -5,6 +5,7 @@ class SceneRoot extends Phaser.Scene {
     preload() {
         this.load.image('button1', 'assets/lesson1.png');
         this.load.image('button2', 'assets/lesson2.png');
+
     }
 
     create() {
@@ -15,7 +16,7 @@ class SceneRoot extends Phaser.Scene {
 
         this.add.image(0.675 * config.width,0.5 * config.height, 'button2').setInteractive().on('pointerdown', function(){
             console.log('change scene');
-            this.scene.start('Lesson2D');           
+            this.scene.start('Choose');           
         }, this);
 
 
