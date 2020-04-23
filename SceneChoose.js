@@ -19,7 +19,7 @@ class SceneChoose extends Phaser.Scene {
         this.backButtonSetup();
 
         // Text
-        this.caption = this.add.text(0.134*config.width, 0.11*config.height, 'Choose when your lessons start at school').setFontFamily('Arial').setFontSize(40).setColor('#000000');
+        this.caption1 = this.add.text(0.134*config.width, 0.11*config.height, 'Choose when your lessons start at school').setFontFamily('Arial').setFontSize(40).setColor('#000000');
         this.chooseMorning = this.add.text(0.24*config.width, 0.73*config.height, 'In the morning').setFontFamily('Arial').setFontSize(30).setColor('#000000');
         this.chooseAfternoon = this.add.text(0.58*config.width, 0.73*config.height, 'In the afternoon').setFontFamily('Arial').setFontSize(30).setColor('#000000');
     }
