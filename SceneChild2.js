@@ -54,11 +54,11 @@ class SceneChild2 extends Phaser.Scene {
         this.btnRestart = this.add.image(this.coordinateButton.restart.x * config.width,
             this.coordinateButton.restart.y * config.height,
             "restart").setInteractive().on("pointerdown", function() {
-            this.restartArray();
             if (this.checkDrawBorder) {
                 this.graphics.clear();
                 this.checkDrawBorder = false;
             }
+            this.restartArray();
         }, this);
 
         // Nhan Button DONE thi ve bien cua image
@@ -68,11 +68,14 @@ class SceneChild2 extends Phaser.Scene {
             .setInteractive()
             .on("pointerdown", function() {
                 // Check co Card sai thi draw border
+                if (this.checkDrawBorder) {
+                    this.graphics.clear();
+                    this.checkDrawBorder = false;
+                }
                 if (!this.checkWrongCards()) {
                     this.drawBorderRed();
                 }
             }, this);;
-
     }
 
     tweenItem(gameObject, desX, durations) {
@@ -226,7 +229,7 @@ class SceneChild2 extends Phaser.Scene {
         this.backBtn.setInteractive().on('pointerover', function() {
             this.setAlpha(0.5);
         }).on('pointerout', function() {
-            this.setAlpha(2);   
+            this.setAlpha(2);
         }).on('pointerdown', function() {
             this.scene.start('Menu');
         }, this)
