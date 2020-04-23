@@ -31,10 +31,7 @@ class SceneChild2 extends Phaser.Scene {
         this.inputManager();
 
         this.backButtonSetup();
-        
-        // Text
-        this.caption = this.add.text(0.1*config.width, 0.11*config.height, 'Choose when your lessons start at school').setFontFamily('Arial').setFontSize(40).setColor('#000000');
-
+    
     }
 
     update() {
@@ -65,7 +62,11 @@ class SceneChild2 extends Phaser.Scene {
                 this.checkDrawBorder = false;
             }
             this.restartArray();
-        }, this);
+        }, this).on('pointerover', function () {
+            this.setTint(0x03b5fc);
+        }).on('pointerout', function () {
+            this.clearTint();;
+        });
 
         // Nhan Button DONE thi ve bien cua image
         this.btnDone = this.add.image(this.coordinateButton.done.x * config.width,
@@ -81,7 +82,11 @@ class SceneChild2 extends Phaser.Scene {
                 if (!this.checkWrongCards()) {
                     this.drawBorderRed();
                 }
-            }, this);;
+            }, this).on('pointerover', function () {
+                this.setTint(0x03b5fc);
+            }).on('pointerout', function () {
+                this.clearTint();
+            });
     }
 
     tweenItem(gameObject, desX, durations) {
