@@ -35,6 +35,8 @@ class SceneChild1 extends Phaser.Scene {
         this.packageSetup();
 
         this.inputManager();
+        // TEXT
+        this.caption = this.add.text(0.14*config.width, 0.11*config.height, 'Sort the days into weekdays and weekends').setFontFamily('Arial').setFontSize(40).setColor('#000000');
 
         // Repeatedly put package to the screen after a duration
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });

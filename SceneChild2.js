@@ -29,6 +29,10 @@ class SceneChild2 extends Phaser.Scene {
         this.buttonSetup();
 
         this.inputManager();
+
+        // Text
+        this.caption = this.add.text(0.1*config.width, 0.11*config.height, 'Choose when your lessons start at school').setFontFamily('Arial').setFontSize(40).setColor('#000000');
+
     }
 
     update() {
