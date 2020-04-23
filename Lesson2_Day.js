@@ -32,8 +32,6 @@ class Lesson2_Day extends Phaser.Scene {
         this.backButtonSetup();
         this.gameSetup();
         this.cardSetup();
-
-        this.startGameUI();
     }
 
     update() {
@@ -122,22 +120,4 @@ class Lesson2_Day extends Phaser.Scene {
         }, this);
     }
 
-    startGameUI() {
-        this.cover = new Phaser.Geom.Rectangle(0, 0, config.width, config.height);
-
-        this.graphicCover = this.add.graphics({ fillStyle: { color: 0xffffff } })
-                                .fillRectShape(this.cover)
-                                .setAlpha(0.4);
-
-        this.startGameBtn = this.add.image(config.width / 2, config.height / 2, 'start2').setInteractive();
-        this.startGameBtn.on('pointerover', function () {
-            this.setAlpha(0.8);
-        }).on('pointerout', function () {
-            this.setAlpha(1 / 0.8);
-        }).on('pointerdown', function () {
-            this.graphicCover.destroy();
-            this.startGameBtn.destroy();
-        }, this);
-
-    }
 }

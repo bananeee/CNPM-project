@@ -29,9 +29,6 @@ class SceneChild2 extends Phaser.Scene {
         this.buttonSetup();
 
         this.inputManager();
-
-        this.backButtonSetup();
-
     }
 
     update() {
