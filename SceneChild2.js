@@ -229,6 +229,14 @@ class SceneChild2 extends Phaser.Scene {
         this.arrayZone = [];
 
         this.arrayWrongCards = [];
+
+        // Hiển thị thời gian
+        this.timeText = [ "7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"	];
+        for (let i = 0; i <= 7; i++){
+            this.add.text( (this.coordinateImage.x[i]) * config.width, 
+                    (this.coordinateImage.y[i] - 0.24) * config.height, 
+                    this.timeText[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
+        }
     }
 
     cardSetup() {
