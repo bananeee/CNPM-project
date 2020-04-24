@@ -32,7 +32,7 @@ class SceneChild2 extends Phaser.Scene {
 
         this.backButtonSetup();
     
-        this.CheckWobble();
+        this.checkWobble();
 
     }
 
@@ -40,7 +40,7 @@ class SceneChild2 extends Phaser.Scene {
 
     }
 
-    CheckWobble() {
+    checkWobble() {
         this.timedEvent = this.time.addEvent({
             delay: 10000,
             callback: function() {
@@ -50,6 +50,7 @@ class SceneChild2 extends Phaser.Scene {
                         break;
                     }
                 }
+
             },
             callbackScope: this,
             loop: true
@@ -57,6 +58,12 @@ class SceneChild2 extends Phaser.Scene {
     }
 
     Wobble(gameObject, durations) {
+        // disable input wher wobble
+        this.game.input.enabled = false;
+        this.time.delayedCall(durations * 10, function() {
+            this.game.input.enabled = true;
+        }, [], this);
+
         this.wobbleTween = this.tweens.add({
             targets: gameObject,
             x: gameObject.x + 15,
@@ -64,8 +71,7 @@ class SceneChild2 extends Phaser.Scene {
             yoyo: true,
             repeat: 5,
             ease: 'Sine.easeInOut',
-            delay: 2,
-            paused: false
+            // delay: 2,
         });
     }
 
@@ -163,7 +169,7 @@ class SceneChild2 extends Phaser.Scene {
 
         this.input.on('dragstart', function(pointer, gameObject) {
             this.children.bringToTop(gameObject);
-
+            this.timedEvent.remove();
         }, this);
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
@@ -196,6 +202,7 @@ class SceneChild2 extends Phaser.Scene {
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
             gameObject.x = gameObject.input.dragStartX;
+            this.checkWobble();
         }, this);
 
     }
