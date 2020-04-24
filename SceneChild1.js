@@ -210,7 +210,7 @@ class SceneChild1 extends Phaser.Scene {
         }, this);
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
-            gameObject.input.enabled = false;
+            this.game.input.enabled = false;
             gameObject.clearTint();
             
             if (!dropped) {
@@ -226,9 +226,10 @@ class SceneChild1 extends Phaser.Scene {
                 this.nametagLetf.clearTint();
                 this.nametagRight.clearTint();
                 this.timedEvent.paused = false;
-                if ((dropped && !this.correctDrop) || !dropped) {
-                    gameObject.input.enabled = true;
+                if (dropped && this.correctDrop) {
+                    gameObject.input.enabled = false;
                 }
+                this.game.input.enabled = true;
             }, [], this);
 
         }, this);
