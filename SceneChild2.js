@@ -230,6 +230,9 @@ class SceneChild2 extends Phaser.Scene {
                     (this.coordinateImage.y[i] - 0.24) * config.height, 
                     this.timeText[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
         }
+
+        this.captionScene2 = this.add.text(0.5*config.width, 0.11*config.height, 'Choose when your lessons start at school')
+        .setFontFamily('Arial').setFontSize(40).setColor('#000000').setOrigin(0.5);
     }
 
     cardSetup() {
