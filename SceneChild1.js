@@ -42,7 +42,8 @@ class SceneChild1 extends Phaser.Scene {
         this.progressBar()
 
         // TEXT
-        this.caption = this.add.text(0.14 * config.width, 0.11 * config.height, 'Sort the days into weekdays and weekends').setFontFamily('Arial').setFontSize(40).setColor('#000000');
+        this.captionScene1 = this.add.text(0.5 * config.width, 0.11 * config.height, 'Sort the days into weekdays and weekends')
+            .setFontFamily('Arial').setFontSize(40).setColor('#000000').setOrigin(0.5);
 
         // Repeatedly put package to the screen after a duration
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -218,7 +219,7 @@ class SceneChild1 extends Phaser.Scene {
         }, this);
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
-            gameObject.input.enabled = false;
+            this.game.input.enabled = false;
             gameObject.clearTint();
 
             if (!dropped) {
@@ -234,9 +235,10 @@ class SceneChild1 extends Phaser.Scene {
                 this.nametagLetf.clearTint();
                 this.nametagRight.clearTint();
                 this.timedEvent.paused = false;
-                if ((dropped && !this.correctDrop) || !dropped) {
-                    gameObject.input.enabled = true;
+                if (dropped && this.correctDrop) {
+                    gameObject.input.enabled = false;
                 }
+                this.game.input.enabled = true;
             }, [], this);
 
         }, this);
