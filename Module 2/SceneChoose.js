@@ -25,7 +25,7 @@ class SceneChoose extends Phaser.Scene {
 
     textSetup() {
 // Text
-this.caption1 = this.make.text({
+this.captionChoose = this.make.text({
     x: 0.5 * config.width,
     y: 0.11 * config.height,
     text: 'Choose when your lessons start at school',

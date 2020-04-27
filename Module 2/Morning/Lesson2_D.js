@@ -47,7 +47,7 @@ class Lesson2_D extends Phaser.Scene {
     }
 
     gameSetup() {
-        this.caption1 = this.make.text({
+        this.captionScene2D = this.make.text({
             x: 0.5 * config.width,
             y: 0.14 * config.height,
             text: 'Luke\'s school day',
@@ -72,8 +72,8 @@ class Lesson2_D extends Phaser.Scene {
             y: [0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63]
         }
 
-         // set up time display above the card
-        this.time = [ "7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"	];
+         // Hiển thị thời gian
+        this.timeD = [ "7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"	];
 
     }
 
@@ -88,7 +88,7 @@ class Lesson2_D extends Phaser.Scene {
                     config.height * this.coordinateImage.y[i] + 30, 'btn' ),
                 time: this.add.text( (this.coordinateImage.x[i]) * config.width, 
                     (this.coordinateImage.y[i] - 0.24) * config.height, 
-                    this.time[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
+                    this.timeD[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
             });
      
             if (i != 0) {

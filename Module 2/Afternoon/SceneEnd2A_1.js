@@ -41,7 +41,7 @@ class SceneEnd2A_1 extends Phaser.Scene {
     }
 
     textSetup() {
-        this.caption1 = this.make.text({
+        this.captionSceneEnd2A = this.make.text({
             x: 0.5 * config.width,
             y: 0.5 * config.height,
             text: 'Great! >.<',
