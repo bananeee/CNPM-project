@@ -29,8 +29,6 @@ class SceneChild1 extends Phaser.Scene {
     create() {
         this.gameSetup();
 
-        this.backButtonSetup();
-
         this.setupLoader();
 
         this.setUpDropzone();
@@ -39,24 +37,13 @@ class SceneChild1 extends Phaser.Scene {
 
         this.inputManager();
 
-        this.progressBar()
+        this.progressBar();
 
-        // TEXT
-        this.captionScene1 = this.make.text({
-            x: 0.5 * config.width,
-            y: 0.11 * config.height,
-            text: 'Sort the days into weekdays and weekends',
-            origin: { x: 0.5, y: 0.5 },
-            style: {
-                font: 'bold 40px Arial',
-                fill: 'black',               
-            }
-        });
-
-        // Repeatedly put package to the screen after a duration
-        this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
+        this.textSetup();
 
         this.startGameUI();
+
+        this.backButtonSetup();
 
         // DEBUG TEXT
         this.count = 0;
@@ -94,12 +81,12 @@ class SceneChild1 extends Phaser.Scene {
         this.packageStacked = []; // package wait to be displayed
         this.packageOnTrack = []; // package is being displayed
 
-        this.duration = { true: 1000, false: 1000 - 500 }; // duration for animation. True if correct answer, False if wrong
+        this.duration = { true: 850, false: 750 - 400, win: 2000 }; // duration for animation. True if correct answer, False if wrong
 
         this.slotWeekday = 0;
         this.slotWeekend = 5;
 
-        this.packageSlot = [{ x: 0.085 * config.width, y: 0.8 * config.height }, { x: 0.22 * config.width, y: 0.8 * config.height },
+        this.packageSlot = [{ x: 0.085 * config.width, y: 0.8 * config.height }, { x: 0.2225 * config.width, y: 0.8 * config.height },
             { x: 0.36 * config.width, y: 0.8 * config.height }, { x: 0.113 * config.width, y: 0.611 * config.height },
             { x: 0.25 * config.width, y: 0.611 * config.height }, { x: 0.67 * config.width, y: 0.8 * config.height },
             { x: 0.825 * config.width, y: 0.8 * config.height }
@@ -109,6 +96,9 @@ class SceneChild1 extends Phaser.Scene {
             left: { x: 234, y: 582 },
             right: { x: 789, y: 582 }
         }
+
+        // Repeatedly put package to the screen after a duration
+        this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
     }
 
     setupLoader() {
@@ -161,13 +151,26 @@ class SceneChild1 extends Phaser.Scene {
         }
     }
 
+    textSetup() {
+        this.captionScene1 = this.make.text({
+            x: 0.5 * config.width,
+            y: 0.11 * config.height,
+            text: 'Sort the days into weekdays and weekends',
+            origin: { x: 0.5, y: 0.5 },
+            style: {
+                font: 'bold 40px Arial',
+                fill: 'black',               
+            }
+        });
+    }
+
     // Manage drag and click event
     inputManager() {
         this.input.dragDistanceThreshold = 0;
 
         this.input.on('dragstart', function(pointer, gameObject) {
             this.children.bringToTop(gameObject);
-            gameObject.setTint(0xff0000);
+            // gameObject.setTint(0xff0000);
             this.stop = true;
             this.timedEvent.paused = true; // these two stop and timeEvent must go together
         }, this);
@@ -213,7 +216,7 @@ class SceneChild1 extends Phaser.Scene {
                     this.slotWeekend++;
                 }
                 gameObject.setScale(1 / 1.5);
-                this.tweenItem(gameObject, packagePos.x, packagePos.y, this.duration.true);
+                this.tweenItem(gameObject, packagePos.x, packagePos.y, this.duration.true / 2);
 
             } else {
                 // Fill color nametags
@@ -228,17 +231,17 @@ class SceneChild1 extends Phaser.Scene {
 
         this.input.on('dragend', function(pointer, gameObject, dropped) {
             this.game.input.enabled = false;
-            gameObject.clearTint();
+            // gameObject.clearTint();
 
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true);
             } else if (dropped && !this.correctDrop) {
-                var timedEvent = this.time.delayedCall(this.duration.false, function() {
+                this.time.delayedCall(this.duration.false, function() {
                     this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true - this.duration.false);
                 }, [], this);
             }
 
-            var timedEvent = this.time.delayedCall(this.duration.true, function() {
+            this.time.delayedCall(this.duration.true, function() {
                 this.stop = false;
                 this.nametagLetf.clearTint();
                 this.nametagRight.clearTint();
@@ -326,10 +329,12 @@ class SceneChild1 extends Phaser.Scene {
     checkWin() {
         if (this.packageStacked.length == 0 && this.packageOnTrack.length == 0) {
             //Can change configuration
-            this.tweenItem(this.ball, 657, 32, 500);
+            this.time.delayedCall(this.duration.true, function() {
+                this.tweenItem(this.ball, 657, 32, 500);
+            }, [], this);
 
             //Can change the Duration
-            let timedEvent = this.time.delayedCall(3000, function() {
+            this.time.delayedCall(4000, function() {
                 this.scene.start('End1');
             }, [], this);
         }
@@ -343,7 +348,7 @@ class SceneChild1 extends Phaser.Scene {
 
         this.graphicCover = this.add.graphics({ fillStyle: { color: 0xffffff } })
             .fillRectShape(this.cover)
-            .setAlpha(0.4);
+            .setAlpha(0.55);
 
         this.startGameBtn = this.add.image(config.width / 2, config.height / 2, 'start1').setInteractive();
         this.startGameBtn.on('pointerover', function() {

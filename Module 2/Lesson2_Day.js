@@ -30,19 +30,15 @@ class Lesson2_Day extends Phaser.Scene {
 
     create() {
         this.backButtonSetup();
+
         this.gameSetup();
+        
         this.cardSetup();
     }
 
     update() {
 
     }
-
-   
- 
-        
-        
-
 
     gameSetup() {
         this.caption1 = this.make.text({
@@ -55,9 +51,10 @@ class Lesson2_Day extends Phaser.Scene {
                 fill: 'black',               
             }
         });
+
         this.buttonNext = this.add.image(config.width * 0.5, config.height * 0.9, 'btn_next');
         this.buttonNext.setInteractive().on('pointerdown', function () {
-            this.scene.start('Lesson2D_2');
+            this.scene.start('End2_1');
         }, this).on('pointerover', function () {
             this.setTint(0x03b5fc);
         }).on('pointerout', function () {

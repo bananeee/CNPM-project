@@ -1,6 +1,6 @@
-class SceneEnd1 extends Phaser.Scene {
+class SceneEnd2_2 extends Phaser.Scene {
     constructor() {
-        super("End1");
+        super("End2_2");
     }
     preload() {
         this.load.image('imgDragon', 'assets/dragon.png');

@@ -13,7 +13,14 @@ class SceneEnd1 extends Phaser.Scene {
         this.imgaDragon = this.add.image(config.width / 2, config.height / 2, "imgDragon");
 
         this.btnGoToLesson = this.add.image(config.width / 2, config.height * 5 / 6, "btnGoToLesson");
-
+        this.btnGoToLesson.setInteractive()
+        .on("pointerdown", function () {
+           this.scene.start("Menu");
+        }, this).on('pointerover', function () {
+            this.setTint(0x03b5fc);
+        }).on('pointerout', function () {
+            this.clearTint();
+        });
     }
     update() {
 

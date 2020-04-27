@@ -14,23 +14,31 @@ class SceneChoose extends Phaser.Scene {
     create() {
         this.buttonGameModeSetup();
         
+        this.textSetup();
+
         this.startGameUI();
         
         this.backButtonSetup();
 
-        // Text
-        this.caption1 = this.make.text({
-            x: 0.5 * config.width,
-            y: 0.11 * config.height,
-            text: 'Choose when your lessons start at school',
-            origin: { x: 0.5, y: 0.5 },
-            style: {
-                font: 'bold 40px Arial',
-                fill: 'black',               
-            }
-        });
-        this.chooseMorning = this.add.text(0.24*config.width, 0.73*config.height, 'In the morning').setFontFamily('Arial').setFontSize(30).setColor('#000000');
-        this.chooseAfternoon = this.add.text(0.58*config.width, 0.73*config.height, 'In the afternoon').setFontFamily('Arial').setFontSize(30).setColor('#000000');
+        
+    }
+
+    textSetup() {
+// Text
+this.caption1 = this.make.text({
+    x: 0.5 * config.width,
+    y: 0.11 * config.height,
+    text: 'Choose when your lessons start at school',
+    origin: { x: 0.5, y: 0.5 },
+    style: {
+        font: 'bold 40px Arial',
+        fill: 'black',               
+    }
+});
+this.chooseMorning = this.add.text(0.24*config.width, 0.73*config.height, 'In the morning')
+                        .setFontFamily('Arial').setFontSize(30).setColor('#000000');
+this.chooseAfternoon = this.add.text(0.58*config.width, 0.73*config.height, 'In the afternoon')
+                        .setFontFamily('Arial').setFontSize(30).setColor('#000000');
     }
 
     backButtonSetup() {
@@ -70,7 +78,7 @@ class SceneChoose extends Phaser.Scene {
 
         this.graphicCover = this.add.graphics({ fillStyle: { color: 0xffffff } })
                                 .fillRectShape(this.cover)
-                                .setAlpha(0.4);
+                                .setAlpha(0.55);
 
         this.startGameBtn = this.add.image(config.width / 2, config.height / 2, 'start2').setInteractive();
         this.startGameBtn.on('pointerover', function () {
