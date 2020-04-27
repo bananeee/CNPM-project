@@ -31,7 +31,7 @@ this.caption1 = this.make.text({
     text: 'Choose when your lessons start at school',
     origin: { x: 0.5, y: 0.5 },
     style: {
-        font: 'bold 40px Arial',
+        font: 'bold 35px Arial',
         fill: 'black',               
     }
 });
@@ -69,7 +69,7 @@ this.chooseAfternoon = this.add.text(0.58*config.width, 0.73*config.height, 'In 
         }).on('pointerout', function () {
             this.clearTint();
         }).on('pointerdown', function () {
-            // this.scene.start('Menu');
+            this.scene.start('Lesson2A_1');
         }, this);
     }
 

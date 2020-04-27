@@ -6,6 +6,9 @@ class SceneChild2D extends Phaser.Scene {
     preload() {
         this.load.image('back', 'assets/back.png');
 
+        this.load.image('ball1', 'assets/lesson2/apple_ball1.png');
+        this.load.image('ball2', 'assets/lesson2/orange_ball1.png');
+
         this.load.image('action0', 'assets/Lesson2/action0.png');
         this.load.image('action1', 'assets/Lesson2/action1.png');
         this.load.image('action2', 'assets/Lesson2/action2.png');
@@ -14,6 +17,7 @@ class SceneChild2D extends Phaser.Scene {
         this.load.image('action5', 'assets/Lesson2/action5.png');
         this.load.image('action6', 'assets/Lesson2/action6.png');
         this.load.image('action7', 'assets/Lesson2/action7.png');
+
         this.load.image('restart', 'assets/Lesson2/restart_button.png');
         this.load.image('done', 'assets/Lesson2/done_button.png');
     }
@@ -31,6 +35,8 @@ class SceneChild2D extends Phaser.Scene {
         this.inputManager();
 
         this.backButtonSetup();
+
+        this.progressBar();
 
         this.checkWobble();
 
@@ -76,7 +82,7 @@ class SceneChild2D extends Phaser.Scene {
 
         this.captionScene2 = this.make.text({
             x: 0.5 * config.width,
-            y: 0.11 * config.height,
+            y: 0.14 * config.height,
             text: 'Luke\'s school day',
             origin: { x: 0.5, y: 0.5 },
             style: {
@@ -271,6 +277,18 @@ class SceneChild2D extends Phaser.Scene {
         }).on('pointerdown', function () {
             this.scene.start('Menu');
         }, this)
+    }
+
+    progressBar() {
+        //Can change configuration
+        let bar = new Phaser.Geom.Rectangle(config.width / 3, config.height * 0.07, config.width / 3, 10);
+        this.graphicCover = this.add.graphics({ fillStyle: { color: 0xccbbba } })
+            .fillRectShape(bar)
+            .setAlpha(0.4);
+
+        //Can change configuration
+        this.ball1 = this.add.image(config.width / 3 + 25, config.height * 0.07 - 14, "ball1");
+        this.ball2 = this.add.image(657, config.height * 0.07 - 14, "ball2");
     }
 
     checkWobble() {

@@ -23,7 +23,7 @@ class SceneChild1 extends Phaser.Scene {
         this.load.image('nametag_right', 'assets/Lesson1/trolley_right_nametag.png');
 
         // IMG BALL
-        this.load.image('ball', 'assets/Lesson2/apple.png'); // CHANGE NOW
+        this.load.image('ball', 'assets/Lesson1/ball.png'); // CHANGE NOW
     }
 
     create() {
@@ -46,13 +46,13 @@ class SceneChild1 extends Phaser.Scene {
         this.backButtonSetup();
 
         // DEBUG TEXT
-        this.count = 0;
-        this.text1 = this.add.text(32, 32, { fill: '0x32a852' });
-        this.text2 = this.add.text(32, 52, { fill: '#32a852' });
-        this.text3 = this.add.text(32, 72, { fill: '#32a852' });
-        this.delay = 0;
-        this.text4 = this.add.text(32, 92, { fill: '#32a852' });
-        this.text100 = this.add.text(32, 112, { fill: '#32a852' }).setColor(0xf542a4);
+        // this.count = 0;
+        // this.text1 = this.add.text(32, 32, { fill: '0x32a852' });
+        // this.text2 = this.add.text(32, 52, { fill: '#32a852' });
+        // this.text3 = this.add.text(32, 72, { fill: '#32a852' });
+        // this.delay = 0;
+        // this.text4 = this.add.text(32, 92, { fill: '#32a852' });
+        // this.text100 = this.add.text(32, 112, { fill: '#32a852' }).setColor(0xf542a4);
     }
 
     update() {
@@ -61,14 +61,14 @@ class SceneChild1 extends Phaser.Scene {
         }
 
         // this.text1.setText("Track " + this.packageOnTrack.length);
-        this.text2.setText("count: " + this.count);
-        this.text3.setText("Stop " + this.stop);
-        this.text4.setText("Delay " + this.delay);
-        var pointer = this.input.activePointer;
-        this.text100.setText([
-            'x: ' + pointer.x,
-            'y: ' + pointer.y
-        ]);
+        // this.text2.setText("count: " + this.count);
+        // this.text3.setText("Stop " + this.stop);
+        // this.text4.setText("Delay " + this.delay);
+        // var pointer = this.input.activePointer;
+        // this.text100.setText([
+        //     'x: ' + pointer.x,
+        //     'y: ' + pointer.y
+        // ]);
 
         this.checkWin();
     }
@@ -154,11 +154,11 @@ class SceneChild1 extends Phaser.Scene {
     textSetup() {
         this.captionScene1 = this.make.text({
             x: 0.5 * config.width,
-            y: 0.11 * config.height,
+            y: 0.14 * config.height,
             text: 'Sort the days into weekdays and weekends',
             origin: { x: 0.5, y: 0.5 },
             style: {
-                font: 'bold 40px Arial',
+                font: 'bold 35px Arial',
                 fill: 'black',               
             }
         });

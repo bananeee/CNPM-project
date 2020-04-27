@@ -1,4 +1,4 @@
-class Lesson2_Day extends Phaser.Scene {
+class Lesson2_D extends Phaser.Scene {
     constructor() {
         super("Lesson2D_1");
     }
@@ -7,8 +7,12 @@ class Lesson2_Day extends Phaser.Scene {
         this.load.image('back', 'assets/back.png');
         this.load.image('start2', 'assets/Lesson2/orange.png');
 
+        this.load.image('ball1', 'assets/lesson2/apple_ball1.png');
+        this.load.image('ball2', 'assets/lesson2/orange_ball1.png');
+
         this.load.image('btn', 'assets/Lesson2/ok.png');
         this.load.image('btn_next', 'assets/Lesson2/next_button.png');
+
         this.load.image('card0', 'assets/Lesson2/card0.png');
         this.load.image('card1', 'assets/Lesson2/card1.png');
         this.load.image('card2', 'assets/Lesson2/card2.png');
@@ -34,6 +38,8 @@ class Lesson2_Day extends Phaser.Scene {
         this.gameSetup();
         
         this.cardSetup();
+
+        this.progressBar();
     }
 
     update() {
@@ -43,18 +49,18 @@ class Lesson2_Day extends Phaser.Scene {
     gameSetup() {
         this.caption1 = this.make.text({
             x: 0.5 * config.width,
-            y: 0.11 * config.height,
+            y: 0.14 * config.height,
             text: 'Luke\'s school day',
             origin: { x: 0.5, y: 0.5 },
             style: {
-                font: 'bold 40px Arial',
+                font: 'bold 35px Arial',
                 fill: 'black',               
             }
         });
 
         this.buttonNext = this.add.image(config.width * 0.5, config.height * 0.9, 'btn_next');
         this.buttonNext.setInteractive().on('pointerdown', function () {
-            this.scene.start('End2_1');
+            this.scene.start('End2D_1');
         }, this).on('pointerover', function () {
             this.setTint(0x03b5fc);
         }).on('pointerout', function () {
@@ -140,6 +146,18 @@ class Lesson2_Day extends Phaser.Scene {
         }).on('pointerdown', function () {
             this.scene.start('Menu');
         }, this);
+    }
+
+    progressBar() {
+        //Can change configuration
+        let bar = new Phaser.Geom.Rectangle(config.width / 3, config.height * 0.07, config.width / 3, 10);
+        this.graphicCover = this.add.graphics({ fillStyle: { color: 0xccbbba } })
+            .fillRectShape(bar)
+            .setAlpha(0.4);
+
+        //Can change configuration
+        this.ball1 = this.add.image(config.width / 3 + 25, config.height * 0.07 - 14, "ball1");
+        this.ball2 = this.add.image(config.width / 3 + 65, config.height * 0.07 - 14, "ball2");
     }
 
 }

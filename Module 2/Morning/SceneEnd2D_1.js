@@ -1,9 +1,9 @@
-class SceneEnd2_2 extends Phaser.Scene {
+class SceneEnd2D_1 extends Phaser.Scene {
     constructor() {
-        super("End2_2");
+        super("End2D_1");
     }
     preload() {
-        this.load.image('apple', 'assets/lesson2/apple_ball2.png');
+        this.load.image('orange', 'assets/lesson2/orange_ball2.png');
         this.load.image('ball1', 'assets/lesson2/apple_ball1.png');
         this.load.image('ball2', 'assets/lesson2/orange_ball1.png');
     }
@@ -21,7 +21,7 @@ class SceneEnd2_2 extends Phaser.Scene {
 
     update() {
         this.graphics.clear();
-        this.rect.x = this.apple.x;
+        this.rect.x = this.orange.x;
         this.graphics.fillRectShape(this.rect);
 
     }
@@ -36,7 +36,7 @@ class SceneEnd2_2 extends Phaser.Scene {
 
         this.graphics.fillRectShape(this.rect);
 
-        this.apple = this.add.image(config.width / 4, config.height / 2, "apple");
+        this.orange = this.add.image(config.width / 4, config.height / 2, "orange");
 
     }
 
@@ -44,7 +44,7 @@ class SceneEnd2_2 extends Phaser.Scene {
         this.caption1 = this.make.text({
             x: 0.5 * config.width,
             y: 0.5 * config.height,
-            text: 'Excellent! >.<',
+            text: 'Great! >.<',
             origin: { x: 0.5, y: 0.5 },
             style: {
                 font: '80px Arial',
@@ -55,16 +55,16 @@ class SceneEnd2_2 extends Phaser.Scene {
 
     showContent() {
         this.tweens.add({
-            targets: this.apple,
-            x: config.width * 4 / 5,
+            targets: this.orange,
+            x: config.width * 3 / 4,
             angle: 180 * 6,
             ease: 'Bounce.easeOut',
             duration: 5000,
         }, this);
 
         this.tweens.add({
-            targets: this.ball1,
-            x: 617,
+            targets: this.ball2,
+            x: 657,
             angle: 180 * 6,
             ease: 'Power1',
             duration: 800,
@@ -72,7 +72,7 @@ class SceneEnd2_2 extends Phaser.Scene {
 
             completeDelay: 600,
             onComplete: function () {
-                this.scene.start("End1");
+                this.scene.start("Lesson2D_2");
             },
             onCompleteScope: this,
 
@@ -90,8 +90,6 @@ class SceneEnd2_2 extends Phaser.Scene {
 
         //Can change configuration
         this.ball1 = this.add.image(config.width / 3 + 25, config.height * 0.07 - 14, "ball1");
-        this.ball2 = this.add.image(657, config.height * 0.07 - 14, "ball2");
+        this.ball2 = this.add.image(config.width / 3 + 65, config.height * 0.07 - 14, "ball2");
     }
-
-
 }
