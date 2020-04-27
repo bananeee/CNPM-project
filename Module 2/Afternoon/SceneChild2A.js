@@ -11,10 +11,10 @@ class SceneChild2A extends Phaser.Scene {
 
         this.load.image('actionA0', 'assets/Lesson2/action0.png');
         this.load.image('actionA1', 'assets/Lesson2/action1.png');
-        this.load.image('actionA2', 'assets/Lesson2/action2.png');
+        this.load.image('actionA2', 'assets/Lesson2/action5.png');
         this.load.image('actionA3', 'assets/Lesson2/action3.png');
-        this.load.image('actionA4', 'assets/Lesson2/action4.png');
-        this.load.image('actionA5', 'assets/Lesson2/action5.png');
+        this.load.image('actionA4', 'assets/Lesson2/action2.png');
+        this.load.image('actionA5', 'assets/Lesson2/action4.png');
         this.load.image('actionA6', 'assets/Lesson2/action6.png');
         this.load.image('actionA7', 'assets/Lesson2/action7.png');
 
