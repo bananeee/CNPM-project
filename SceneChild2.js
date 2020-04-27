@@ -112,6 +112,10 @@ class SceneChild2 extends Phaser.Scene {
             .setInteractive()
             .on("pointerdown", function() {
                 // Check co Card sai thi draw border
+                if (this.checkWrongCards()) {
+                    
+                }
+                
                 if (this.checkDrawBorder) {
                     this.graphics.clear();
                     this.checkDrawBorder = false;
@@ -291,4 +295,6 @@ class SceneChild2 extends Phaser.Scene {
             this.scene.start('Menu');
         }, this)
     }
+
+
 }
