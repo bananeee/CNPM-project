@@ -73,20 +73,31 @@ class SceneChild2D extends Phaser.Scene {
         this.arrayWrongCards = [];
 
         // Hiển thị thời gian
-        this.timeText = ["7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"];
+        this.timeTextD = ["7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"];
         for (let i = 0; i <= 7; i++) {
             this.add.text(this.coordinateImage.x[i],
                 this.coordinateImage.y[i] - 0.24 * config.height,
-                this.timeText[i]).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
+                this.timeTextD[i]).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
         }
 
-        this.captionScene2 = this.make.text({
+        this.captionScene2D_1 = this.make.text({
             x: 0.5 * config.width,
             y: 0.14 * config.height,
-            text: 'Luke\'s school day',
+            text: 'Correct the mistakes in the Luke\'s school day',
             origin: { x: 0.5, y: 0.5 },
             style: {
-                font: 'bold 40px Arial',
+                font: 'bold 35px Arial',
+                fill: 'black',
+            }
+        });
+
+        this.captionScene2D_2 = this.make.text({
+            x: 0.5 * config.width,
+            y: 0.2 * config.height,
+            text: 'You can swap the pictures around',
+            origin: { x: 0.5, y: 0.5 },
+            style: {
+                font: '22px Arial',
                 fill: 'black',
             }
         });

@@ -47,7 +47,7 @@ class Lesson2_A extends Phaser.Scene {
     }
 
     gameSetup() {
-        this.caption1 = this.make.text({
+        this.captionLesson2A = this.make.text({
             x: 0.5 * config.width,
             y: 0.14 * config.height,
             text: 'Luke\'s school day',
@@ -73,7 +73,7 @@ class Lesson2_A extends Phaser.Scene {
         }
 
          // Hiển thị thời gian
-        this.time = [ "7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"	];
+        this.timeA = [ "7:30", "8:00", "10:00", "12:30", "14:00", "17:30", "19:00", "21:00"	];
 
     }
 
@@ -88,7 +88,7 @@ class Lesson2_A extends Phaser.Scene {
                     config.height * this.coordinateImage.y[i] + 30, 'btn' ),
                 time: this.add.text( (this.coordinateImage.x[i]) * config.width, 
                     (this.coordinateImage.y[i] - 0.24) * config.height, 
-                    this.time[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
+                    this.timeA[i] ).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
             });
      
             if (i != 0) {

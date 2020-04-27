@@ -7,7 +7,7 @@ class SceneEnd1 extends Phaser.Scene {
         this.load.image('btnGoToLesson', 'assets/go to lesson.png');
     }
     create() {
-        this.captionSceneEnd = this.add.text(0.5*config.width, 0.11*config.height, 'Well done! You completed the card!')
+        this.captionSceneEnd1 = this.add.text(0.5*config.width, 0.11*config.height, 'Well done! You completed the card!')
         .setFontFamily('Arial').setFontSize(40).setColor('#000000').setOrigin(0.5);
 
         this.imgaDragon = this.add.image(config.width / 2, config.height / 2, "imgDragon");
