@@ -7,8 +7,8 @@ class Lesson2_D extends Phaser.Scene {
         this.load.image('back', 'assets/back.png');
         this.load.image('start2', 'assets/Lesson2/orange.png');
 
-        this.load.image('ball1', 'assets/lesson2/apple_ball1.png');
-        this.load.image('ball2', 'assets/lesson2/orange_ball1.png');
+        this.load.image('ball1', 'assets/Lesson2/apple_ball1.png');
+        this.load.image('ball2', 'assets/Lesson2/orange_ball1.png');
 
         this.load.image('btn', 'assets/Lesson2/ok.png');
         this.load.image('btn_next', 'assets/Lesson2/next_button.png');

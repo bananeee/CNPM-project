@@ -3,9 +3,9 @@ class SceneEnd2D_1 extends Phaser.Scene {
         super("End2D_1");
     }
     preload() {
-        this.load.image('orange', 'assets/lesson2/orange_ball2.png');
-        this.load.image('ball1', 'assets/lesson2/apple_ball1.png');
-        this.load.image('ball2', 'assets/lesson2/orange_ball1.png');
+        this.load.image('orange', 'assets/Lesson2/orange_ball2.png');
+        this.load.image('ball1', 'assets/Lesson2/apple_ball1.png');
+        this.load.image('ball2', 'assets/Lesson2/orange_ball1.png');
     }
     create() {
 
