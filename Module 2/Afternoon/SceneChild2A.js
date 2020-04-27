@@ -9,14 +9,14 @@ class SceneChild2A extends Phaser.Scene {
         this.load.image('ball1', 'assets/lesson2/apple_ball1.png');
         this.load.image('ball2', 'assets/lesson2/orange_ball1.png');
 
-        this.load.image('action0', 'assets/Lesson2/action0.png');
-        this.load.image('action1', 'assets/Lesson2/action1.png');
-        this.load.image('action2', 'assets/Lesson2/action2.png');
-        this.load.image('action3', 'assets/Lesson2/action3.png');
-        this.load.image('action4', 'assets/Lesson2/action4.png');
-        this.load.image('action5', 'assets/Lesson2/action5.png');
-        this.load.image('action6', 'assets/Lesson2/action6.png');
-        this.load.image('action7', 'assets/Lesson2/action7.png');
+        this.load.image('actionA0', 'assets/Lesson2/action0.png');
+        this.load.image('actionA1', 'assets/Lesson2/action1.png');
+        this.load.image('actionA2', 'assets/Lesson2/action2.png');
+        this.load.image('actionA3', 'assets/Lesson2/action3.png');
+        this.load.image('actionA4', 'assets/Lesson2/action4.png');
+        this.load.image('actionA5', 'assets/Lesson2/action5.png');
+        this.load.image('actionA6', 'assets/Lesson2/action6.png');
+        this.load.image('actionA7', 'assets/Lesson2/action7.png');
 
         this.load.image('restart', 'assets/Lesson2/restart_button.png');
         this.load.image('done', 'assets/Lesson2/done_button.png');
@@ -95,7 +95,7 @@ class SceneChild2A extends Phaser.Scene {
     cardSetup() {
         let arrayCardsCorrect = [];
         for (let i = 0; i <= 7; i++) {
-            arrayCardsCorrect.push(this.add.image(this.coordinateImage.x[i], this.coordinateImage.y[i], 'action' + i)
+            arrayCardsCorrect.push(this.add.image(this.coordinateImage.x[i], this.coordinateImage.y[i], 'actionA' + i)
                 .setState(i)
                 .on('pointerover', function (pointer) {
                     this.setTint(0xcdd1ce);
