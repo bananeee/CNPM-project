@@ -72,7 +72,7 @@ class SceneEnd2A_1 extends Phaser.Scene {
 
             completeDelay: 600,
             onComplete: function () {
-                this.scene.start("Lesson2D_2");
+                this.scene.start("Lesson2A_2");
             },
             onCompleteScope: this,
 
