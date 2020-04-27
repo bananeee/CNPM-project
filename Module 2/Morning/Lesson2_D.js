@@ -33,13 +33,13 @@ class Lesson2_D extends Phaser.Scene {
     }
 
     create() {
-        this.backButtonSetup();
+        this.backButtonSetup();             // add back to menu button
 
-        this.gameSetup();
+        this.gameSetup();                   // set up game variable
         
-        this.cardSetup();
+        this.cardSetup();                   // display and set up card, button and text in card
 
-        this.progressBar();
+        this.progressBar();                 // display progress bar
     }
 
     update() {
@@ -99,18 +99,10 @@ class Lesson2_D extends Phaser.Scene {
 
             this.card[i].button = this.buttonInteraction(this.card[i].button, i);
 
-
-            // card[i].button.setInteractive().on('pointerdown', function() {
-            //     if (i == 7) {
-            //         this.buttonNext.visible = true;
-            //     } else {
-            //         card[ i+1 ].image.visible = true;
-            //         card[ i+1 ].button.visible = true;
-            //     }  
-            // }, this);
         }
     }
 
+    // set up button in card behavior
     buttonInteraction(button, i) {
         button.setInteractive().on('pointerdown', function () {
             if (i == 7) {
