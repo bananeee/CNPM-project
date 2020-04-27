@@ -13,23 +13,23 @@ class Lesson2_D extends Phaser.Scene {
         this.load.image('btn', 'assets/Lesson2/ok.png');
         this.load.image('btn_next', 'assets/Lesson2/next_button.png');
 
-        this.load.image('card0', 'assets/Lesson2/card0.png');
-        this.load.image('card1', 'assets/Lesson2/card1.png');
-        this.load.image('card2', 'assets/Lesson2/card2.png');
-        this.load.image('card3', 'assets/Lesson2/card3.png');
-        this.load.image('card4', 'assets/Lesson2/card4.png');
-        this.load.image('card5', 'assets/Lesson2/card5.png');
-        this.load.image('card6', 'assets/Lesson2/card6.png');
-        this.load.image('card7', 'assets/Lesson2/card7.png');
+        this.load.image('cardD0', 'assets/Lesson2/card0.png');
+        this.load.image('cardD1', 'assets/Lesson2/card1.png');
+        this.load.image('cardD2', 'assets/Lesson2/card2.png');
+        this.load.image('cardD3', 'assets/Lesson2/card3.png');
+        this.load.image('cardD4', 'assets/Lesson2/card4.png');
+        this.load.image('cardD5', 'assets/Lesson2/card5.png');
+        this.load.image('cardD6', 'assets/Lesson2/card6.png');
+        this.load.image('cardD7', 'assets/Lesson2/card7.png');
 
-        this.load.image('action0', 'assets/Lesson2/action0.png');
-        this.load.image('action1', 'assets/Lesson2/action1.png');
-        this.load.image('action2', 'assets/Lesson2/action2.png');
-        this.load.image('action3', 'assets/Lesson2/action3.png');
-        this.load.image('action4', 'assets/Lesson2/action4.png');
-        this.load.image('action5', 'assets/Lesson2/action5.png');
-        this.load.image('action6', 'assets/Lesson2/action6.png');
-        this.load.image('action7', 'assets/Lesson2/action7.png');
+        this.load.image('actionD0', 'assets/Lesson2/action0.png');
+        this.load.image('actionD1', 'assets/Lesson2/action1.png');
+        this.load.image('actionD2', 'assets/Lesson2/action2.png');
+        this.load.image('actionD3', 'assets/Lesson2/action3.png');
+        this.load.image('actionD4', 'assets/Lesson2/action4.png');
+        this.load.image('actionD5', 'assets/Lesson2/action5.png');
+        this.load.image('actionD6', 'assets/Lesson2/action6.png');
+        this.load.image('actionD7', 'assets/Lesson2/action7.png');
     }
 
     create() {
@@ -83,7 +83,7 @@ class Lesson2_D extends Phaser.Scene {
         for (let i = 0; i <= 7; i++) {
             this.card.push({
                 image: this.add.image( config.width * this.coordinateImage.x[i],
-                    config.height * this.coordinateImage.y[i], 'card' + i ),
+                    config.height * this.coordinateImage.y[i], 'cardD' + i ),
                 button: this.add.image( config.width * this.coordinateImage.x[i],
                     config.height * this.coordinateImage.y[i] + 30, 'btn' ),
                 time: this.add.text( (this.coordinateImage.x[i]) * config.width, 
@@ -123,7 +123,7 @@ class Lesson2_D extends Phaser.Scene {
             this.card[i].image.destroy();
             this.card[i].button.destroy();
             this.card[i].image = this.add.image(config.width * this.coordinateImage.x[i],
-                config.height * this.coordinateImage.y[i], 'action' + i)
+                config.height * this.coordinateImage.y[i], 'actionD' + i)
         }, this);
 
         button.setInteractive().on('pointerover', function () {
