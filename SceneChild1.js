@@ -21,6 +21,9 @@ class SceneChild1 extends Phaser.Scene {
 
         this.load.image('nameTag_left', 'assets/Lesson1/trolley_left_nametag.png');
         this.load.image('nametag_right', 'assets/Lesson1/trolley_right_nametag.png');
+
+        // IMG BALL
+        this.load.image('ball', 'assets/Lesson2/apple.png'); // CHANGE NOW
     }
 
     create() {
@@ -35,8 +38,20 @@ class SceneChild1 extends Phaser.Scene {
         this.packageSetup();
 
         this.inputManager();
+
+        this.progressBar()
+
         // TEXT
-        this.caption = this.add.text(0.14*config.width, 0.11*config.height, 'Sort the days into weekdays and weekends').setFontFamily('Arial').setFontSize(40).setColor('#000000');
+        this.captionScene1 = this.make.text({
+            x: 0.5 * config.width,
+            y: 0.11 * config.height,
+            text: 'Sort the days into weekdays and weekends',
+            origin: { x: 0.5, y: 0.5 },
+            style: {
+                font: 'bold 40px Arial',
+                fill: 'black',               
+            }
+        });
 
         // Repeatedly put package to the screen after a duration
         this.timedEvent = this.time.addEvent({ delay: 2000, callback: this.onEvent, callbackScope: this, loop: true });
@@ -50,7 +65,7 @@ class SceneChild1 extends Phaser.Scene {
         this.text3 = this.add.text(32, 72, { fill: '#32a852' });
         this.delay = 0;
         this.text4 = this.add.text(32, 92, { fill: '#32a852' });
-        this.text100 = this.add.text(32, 112, { fill: '#32a852' });
+        this.text100 = this.add.text(32, 112, { fill: '#32a852' }).setColor(0xf542a4);
     }
 
     update() {
@@ -67,6 +82,8 @@ class SceneChild1 extends Phaser.Scene {
             'x: ' + pointer.x,
             'y: ' + pointer.y
         ]);
+
+        this.checkWin();
     }
 
     gameSetup() {
@@ -77,7 +94,7 @@ class SceneChild1 extends Phaser.Scene {
         this.packageStacked = []; // package wait to be displayed
         this.packageOnTrack = []; // package is being displayed
 
-        this.duration = {true: 1000, false: 1000 - 500}; // duration for animation. True if correct answer, False if wrong
+        this.duration = { true: 1000, false: 1000 - 500 }; // duration for animation. True if correct answer, False if wrong
 
         this.slotWeekday = 0;
         this.slotWeekend = 5;
@@ -95,7 +112,7 @@ class SceneChild1 extends Phaser.Scene {
     }
 
     setupLoader() {
-        this.loader = this.add.tileSprite(config.width / 2, config.height * 0.471, config.width, 15, 'loader' );
+        this.loader = this.add.tileSprite(config.width / 2, config.height * 0.471, config.width, 15, 'loader');
     }
 
     // Drop zone 
@@ -164,7 +181,7 @@ class SceneChild1 extends Phaser.Scene {
 
 
         this.input.on('dragenter', function(pointer, gameObject, dropZone) {
-            this.count ++;
+            this.count++;
             dropZone.setTint(0xcdd1ce);
             if (dropZone.name === "weekDays") this.nametagLetf.setTint(0xcdd1ce);
             else
@@ -212,7 +229,7 @@ class SceneChild1 extends Phaser.Scene {
         this.input.on('dragend', function(pointer, gameObject, dropped) {
             this.game.input.enabled = false;
             gameObject.clearTint();
-            
+
             if (!dropped) {
                 this.tweenItem(gameObject, gameObject.input.dragStartX, gameObject.input.dragStartY, this.duration.true);
             } else if (dropped && !this.correctDrop) {
@@ -289,10 +306,33 @@ class SceneChild1 extends Phaser.Scene {
         this.backBtn.setInteractive().on('pointerover', function() {
             this.setAlpha(0.5);
         }).on('pointerout', function() {
-            this.setAlpha(2);   
+            this.setAlpha(2);
         }).on('pointerdown', function() {
             this.scene.start('Menu');
         }, this)
+    }
+
+    progressBar() {
+        //Can change configuration
+        let bar = new Phaser.Geom.Rectangle(config.width / 3, config.height * 0.07, config.width / 3, 10);
+        this.graphicCover = this.add.graphics({ fillStyle: { color: 0xccbbba } })
+            .fillRectShape(bar)
+            .setAlpha(0.4);
+
+        //Can change configuration
+        this.ball = this.add.image(config.width / 3 + 25, config.height * 0.07 - 14, "ball");
+    }
+
+    checkWin() {
+        if (this.packageStacked.length == 0 && this.packageOnTrack.length == 0) {
+            //Can change configuration
+            this.tweenItem(this.ball, 657, 32, 500);
+
+            //Can change the Duration
+            let timedEvent = this.time.delayedCall(3000, function() {
+                this.scene.start('End1');
+            }, [], this);
+        }
     }
 
     startGameUI() {
@@ -302,15 +342,15 @@ class SceneChild1 extends Phaser.Scene {
         this.cover = new Phaser.Geom.Rectangle(0, 0, config.width, config.height);
 
         this.graphicCover = this.add.graphics({ fillStyle: { color: 0xffffff } })
-                                .fillRectShape(this.cover)
-                                .setAlpha(0.4);
+            .fillRectShape(this.cover)
+            .setAlpha(0.4);
 
         this.startGameBtn = this.add.image(config.width / 2, config.height / 2, 'start1').setInteractive();
-        this.startGameBtn.on('pointerover', function () {
+        this.startGameBtn.on('pointerover', function() {
             this.setAlpha(0.8);
-        }).on('pointerout', function () {
+        }).on('pointerout', function() {
             this.setAlpha(1 / 0.8);
-        }).on('pointerdown', function () {
+        }).on('pointerdown', function() {
             this.graphicCover.destroy();
             this.startGameBtn.destroy();
             this.stop = false;

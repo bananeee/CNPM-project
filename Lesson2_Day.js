@@ -45,8 +45,16 @@ class Lesson2_Day extends Phaser.Scene {
 
 
     gameSetup() {
-        this.caption1 = this.add.text(0.35*config.width, 0.11*config.height,
-             'Luke\'s school day').setFontFamily('Arial').setFontSize(40).setColor('#000000');
+        this.caption1 = this.make.text({
+            x: 0.5 * config.width,
+            y: 0.11 * config.height,
+            text: 'Luke\'s school day',
+            origin: { x: 0.5, y: 0.5 },
+            style: {
+                font: 'bold 40px Arial',
+                fill: 'black',               
+            }
+        });
         this.buttonNext = this.add.image(config.width * 0.5, config.height * 0.9, 'btn_next');
         this.buttonNext.setInteractive().on('pointerdown', function () {
             this.scene.start('Lesson2D_2');

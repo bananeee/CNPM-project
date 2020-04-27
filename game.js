@@ -5,7 +5,7 @@ var config = {
     height: 610,
     parent: 'game_box',
     backgroundColor: 0xffffff,
-    scene: [SceneRoot, Lesson2_Day, SceneChild1, SceneChild2, SceneChoose, SceneEnd1],
+    scene: [SceneRoot, Lesson2_Day, SceneChild1, SceneEnd1, SceneChild2, SceneChoose],
 }
 
 var game = new Phaser.Game(config);
