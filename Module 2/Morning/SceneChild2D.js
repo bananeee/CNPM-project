@@ -72,7 +72,7 @@ class SceneChild2D extends Phaser.Scene {
 
         this.arrayWrongCards = [];
 
-        // Hiển thị thời gian
+        // display time above the card
         this.timeText = ["7:30", "8:00", "8:30", "13:00", "14:30", "16:00", "19:00", "21:00"];
         for (let i = 0; i <= 7; i++) {
             this.add.text(this.coordinateImage.x[i],
@@ -80,6 +80,7 @@ class SceneChild2D extends Phaser.Scene {
                 this.timeText[i]).setFontFamily('Arial').setFontSize(30).setColor('#000000').setOrigin(0.5)
         }
 
+        // display mission
         this.captionScene2 = this.make.text({
             x: 0.5 * config.width,
             y: 0.14 * config.height,
@@ -174,7 +175,7 @@ class SceneChild2D extends Phaser.Scene {
 
     }
 
-    //Ham restart
+    // restart game method for restart button
     restartArray() {
 
         for (let i = 0; i <= 7; i++) {
@@ -189,7 +190,7 @@ class SceneChild2D extends Phaser.Scene {
     }
 
     buttonSetup() {
-        // Nhan restart 
+        // restart button
         this.btnRestart = this.add.image(this.coordinateButton.restart.x * config.width,
             this.coordinateButton.restart.y * config.height,
             "restart").setInteractive().on("pointerdown", function () {
@@ -204,7 +205,7 @@ class SceneChild2D extends Phaser.Scene {
                 this.clearTint();;
             });
 
-        // Nhan Button DONE thi ve bien cua image
+        // button done, show 
         this.btnDone = this.add.image(this.coordinateButton.done.x * config.width,
             this.coordinateButton.done.y * config.height,
             "done")
